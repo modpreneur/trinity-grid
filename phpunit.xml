@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.3/phpunit.xsd"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         bootstrap="Tests/Functional/app/AppKernel.php"
+>
+    <php>
+        <server name="SYMFONY" value="vendor"/>
+        <server name="KERNEL_DIR" value="Tests/app"/>
+    </php>
+
+    <logging>
+        <log type="coverage-html" target="build/coverage" title="Trinity" charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+        <log type="junit" target="./build/logs/junit.xml" logIncompleteSkipped="false"/>
+    </logging>
+
+    <testsuites>
+        <testsuite name="Grid Test Suite">
+            <directory>./Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>GridBundle</directory>
+            <exclude>
+                <directory suffix=".php">./Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

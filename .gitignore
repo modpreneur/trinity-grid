@@ -1,0 +1,8 @@
+/vendor/*
+# Build data
+/build/
+#idea
+/.idea
+/NotificationBundle/Tests/app/cache
+/NotificationBundle/Tests/app/logs
+/.gitignore

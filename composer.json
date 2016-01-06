@@ -1,0 +1,38 @@
+{
+  "name": "trinity/grid",
+  "description": "Trinity Grid bundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Trinity Team",
+      "email": "info@modpreneur.com"
+    }
+  ],
+
+  "require": {
+    "php": ">=7",
+    "symfony/framework-bundle": ">=2.8",
+    "nette/utils": "~2.3",
+    "trinity/framework": "dev-master",
+    "dmishh/settings-bundle" : "dev-master"
+  },
+
+  "require-dev": {
+    "sensio/generator-bundle": "~3.0",
+    "phpunit/phpunit": "5.1.*",
+    "knplabs/knp-menu-bundle":      "~2.1",
+    "mockery/mockery":              "~0.9"
+  },
+
+  "autoload": {
+    "classmap": ["src/"]
+  },
+
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}
