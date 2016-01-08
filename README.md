@@ -3,8 +3,9 @@
 Trinity grid is part of Trinity package. 
 
 Description:
-1) Converts an array of entities to array of strings.
-2) Array of string is convert to JSON:
+
+* Converts an array of entities to array of strings.
+* Array of string is convert to JSON:
 
 
 ##Documentation
