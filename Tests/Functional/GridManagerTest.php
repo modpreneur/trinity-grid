@@ -10,20 +10,21 @@ use Trinity\Bundle\GridBundle\Tests\Functional\Entity\Product;
 
 
 /**
- * Class GridLoaderTest
+ * Class GridManagerTest
  * @package Trinity\Bundle\GridBundle\Tests\Functional
  */
-class GridLoaderTest extends WebTestCase
+class GridManagerTest extends WebTestCase
 {
 
-    public function testAddGrid(){
+    public function testAddGrid()
+    {
 
         $kernel = $this->createClient()->getKernel();
 
-        $container  = $kernel->getContainer();
+        $container = $kernel->getContainer();
         $loader = $container->get('trinity.grid.manager');
 
-        foreach($loader->getGrids() as $grid){
+        foreach ($loader->getGrids() as $grid) {
             $this->assertInstanceOf("Trinity\\Bundle\\GridBundle\\Grid\\BaseGrid", $grid);
         }
 
@@ -33,54 +34,57 @@ class GridLoaderTest extends WebTestCase
         );
     }
 
-    public function testGetGridNameFromEntities(){
+
+    public function testGetGridNameFromEntities()
+    {
 
         $kernel = $this->createClient()->getKernel();
 
-        $container  = $kernel->getContainer();
+        $container = $kernel->getContainer();
         $manager = $container->get('trinity.grid.manager');
 
         $this->assertEquals('product', $manager->getGridNameFromEntieies($this->getEntitiesErray()));
     }
 
 
-    public function testConvert(){
+    public function testConvert()
+    {
 
         $kernel = $this->createClient()->getKernel();
 
-        $container  = $kernel->getContainer();
+        $container = $kernel->getContainer();
         $manager = $container->get('trinity.grid.manager');
 
-        $array = $manager->convertEntitiesToArray( $this->getEntitiesErray(), ['id', 'name', 'description', 'nonexistentColumn', 'createdAt'] );
+        $array = $manager->convertEntitiesToArray(
+            $this->getEntitiesErray(),
+            ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']
+        );
 
         $this->assertEquals(
             [
                 [
-                    'id'   => '1.', // global
+                    'id' => '1.', // global
                     'name' => 'Template edit - John Dee', // template
                     'description' => 'Description.',
                     'nonexistentColumn' => '',
-                    'createdAt' => '01/01/2010 00:00'
-                ]
+                    'createdAt' => '01/01/2010 00:00',
+                ],
             ],
             $array
         );
-
-
     }
 
 
-    protected function getEntitiesErray() : array {
+    protected function getEntitiesErray() : array
+    {
         $productA = new Product();
 
-        $productA
-            ->setName("John Dee")
-            ->setDescription("Description.")
-            ->setCreatedAt(DateTime::from("2010-1-1"))
-            ->setUpdatedAt(DateTime::from("2010-1-1"));
+        $productA->setName("John Dee")->setDescription("Description.")->setCreatedAt(
+                DateTime::from("2010-1-1")
+            )->setUpdatedAt(DateTime::from("2010-1-1"));
 
         return [
-            $productA
+            $productA,
         ];
     }
 }
