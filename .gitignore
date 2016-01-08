@@ -2,7 +2,7 @@
 # Build data
 /build/
 #idea
-/.idea
-/NotificationBundle/Tests/app/cache
-/NotificationBundle/Tests/app/logs
+.idea
+Tests/Functional/app/cache
+Tests/Functional/app/logs
 /.gitignore

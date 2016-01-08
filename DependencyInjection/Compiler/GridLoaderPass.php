@@ -23,11 +23,11 @@ class GridLoaderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('trinity.grid.loader')) {
+        if (false === $container->hasDefinition('trinity.grid.manager')) {
             return;
         }
 
-        $definition = $container->getDefinition('trinity.grid.loader');
+        $definition = $container->getDefinition('trinity.grid.manager');
         $taggedServices = $container->findTaggedServiceIds('trinity.grid');
 
 

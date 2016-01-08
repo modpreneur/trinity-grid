@@ -15,6 +15,7 @@ parameters:
     debug_toolbar: true
     debug_redirects: false
     use_assetic_controller: true
+    locale: en
 
 # Doctrine Configuration
 doctrine:
@@ -32,27 +33,14 @@ framework:
     session:
         storage_id: session.storage.filesystem
     router: { resource: "%kernel.root_dir%/routing.yml" }
+    templating:
+            engines: ['twig']
 
-security:
-  providers:
-      fos_userbundle:
-          id: fos_user.user_provider.username
 
-      in_memory:
-          memory:
-              users:
-                  ryan:
-                      password: ryanpass
-                      roles: 'ROLE_ADMIN'
-
-  role_hierarchy:
-      ROLE_ADMIN:       ROLE_USER
-      ROLE_SUPER_ADMIN: ROLE_ADMIN
-
-  firewalls:
-    dev:
-        pattern: ^/(_(profiler|wdt)|css|images|js)/
-        security: false
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
 
 grid:
 

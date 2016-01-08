@@ -10,19 +10,24 @@ namespace Trinity\Bundle\GridBundle\Grid;
  * Class GridManager
  * @package Trinity\Grid
  */
-class GridLoader
+class GridManager
 {
     /**
      * @var array
      */
     protected $grids;
 
+    /** @var  \Twig_Environment */
+    protected $twig;
+
+
 
     /**
-     * GridLoader constructor.
+     * GridManager constructor.
      */
-    public function __construct()
+    public function __construct($e)
     {
+        $this->twig = new \Twig_Environment($e);
         $this->grids = [];
     }
 
@@ -31,9 +36,9 @@ class GridLoader
      * @param string $alias
      * @param BaseGrid $grid
      *
-     * @return GridLoader
+     * @return GridManager
      */
-    public function addGrid($alias, $grid) : GridLoader{
+    public function addGrid($alias, $grid) : GridManager{
         $this->grids[$alias] = $grid;
 
         return $this;
@@ -60,5 +65,7 @@ class GridLoader
 
         return null;
     }
+
+
 
 }

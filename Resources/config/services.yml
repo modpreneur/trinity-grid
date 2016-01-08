@@ -1,6 +1,9 @@
 services:
-  trinity.grid.loader:
-    class: Trinity\Bundle\GridBundle\Grid\GridLoader
+  trinity.grid.manager:
+    class: Trinity\Bundle\GridBundle\Grid\GridManager
+    arguments:
+      - @twig.loader.filesystem
+
 
 
 

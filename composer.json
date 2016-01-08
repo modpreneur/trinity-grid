@@ -15,7 +15,9 @@
     "symfony/framework-bundle": ">=2.8",
     "nette/utils": "~2.3",
     "trinity/framework": "dev-master",
-    "dmishh/settings-bundle" : "dev-master"
+    "dmishh/settings-bundle" : "dev-master",
+    "twig/extensions" : ">=1.3",
+    "friendsofsymfony/user-bundle": "dev-master"
   },
 
   "require-dev": {

@@ -21,6 +21,8 @@ while ($dir !== $lastDir) {
     }
     $dir = dirname($dir);
 }
+
+
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -41,8 +43,11 @@ class AppKernel extends Kernel
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new \Symfony\Bundle\TwigBundle\TwigBundle(),
+            //new \FOS\UserBundle\FOSUserBundle(),
 
 
+            new \Trinity\FrameworkBundle\TrinityFrameworkBundle(),
             new \Trinity\Bundle\GridBundle\GridBundle(),
         );
     }
