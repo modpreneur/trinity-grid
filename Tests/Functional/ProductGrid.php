@@ -3,9 +3,9 @@
  * This file is part of Trinity package.
  */
 
-namespace Trinity\Tests\Functional;
+namespace Trinity\Bundle\GridBundle\Tests\Functional;
 
-use Trinity\Grid\BaseGrid;
+use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
 
 /**

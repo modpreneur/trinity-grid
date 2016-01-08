@@ -9,7 +9,6 @@ namespace Trinity\Bundle\GridBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Validator\Mapping\Loader\FilesLoader;
 
 
 /**
@@ -19,16 +18,6 @@ use Symfony\Component\Validator\Mapping\Loader\FilesLoader;
 class GridLoaderPass implements CompilerPassInterface
 {
     /**
-     * GridLoaderPass constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-
-    /**
-     * You can modify the container here before it is dumped to PHP code.
      *
      * @param ContainerBuilder $container
      */
@@ -39,11 +28,12 @@ class GridLoaderPass implements CompilerPassInterface
         }
 
         $definition = $container->getDefinition('trinity.grid.loader');
+        $taggedServices = $container->findTaggedServiceIds('trinity.grid');
 
-        $enabledDrivers = explode(",", $container->getParameter("trinity.grid"));
-        foreach ($container->findTaggedServiceIds('trinity.notification.driver') as $serviceId => $key) {
-            if (in_array($serviceId, $enabledDrivers)) {
-                $definition->addMethodCall('addGrid', [new Reference($serviceId)]);
+
+        foreach ($taggedServices as $id => $tags) {
+            foreach($tags as $attributes){
+                $definition->addMethodCall('addGrid', [$attributes['alias'], new Reference($id)]);
             }
         }
 

@@ -3,7 +3,7 @@
  * This file is part of Trinity package.
  */
 
-namespace Trinity\Grid;
+namespace Trinity\Bundle\GridBundle\Grid;
 
 /**
  * Class BaseGrid
