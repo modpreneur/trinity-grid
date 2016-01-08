@@ -9,4 +9,7 @@ if (!file_exists($file)) {
     }
 }
 
+
+
+var_dump($file);
 $autoload = require_once $file;

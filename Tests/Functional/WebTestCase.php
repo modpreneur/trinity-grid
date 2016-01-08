@@ -35,23 +35,16 @@ class WebTestCase extends TestCase
     {
         require_once __DIR__.'/app/AppKernel.php';
 
-        return 'Symfony\Bundle\SecurityBundle\Tests\Functional\app\AppKernel';
+        return 'Trinity\Bundle\GridBundle\Tests\Functional\app\AppKernel';
     }
 
 
     protected static function createKernel(array $options = array())
     {
         $class = self::getKernelClass();
-        if (!isset($options['test_case'])) {
-            throw new \InvalidArgumentException('The option "test_case" must be set.');
-        }
 
         return new $class(
-            $options['test_case'],
-            isset($options['root_config']) ? $options['root_config'] : 'config.yml',
-            isset($options['environment']) ? $options['environment'] : 'securitybundletest'.strtolower(
-                    $options['test_case']
-                ),
+            'test',
             isset($options['debug']) ? $options['debug'] : true
         );
     }

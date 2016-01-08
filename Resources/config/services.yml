@@ -1,0 +1,6 @@
+services:
+  trinity.grid.loader:
+    class: Trinity\Bundle\GridBundle\DependencyInjection\Compiler\GridLoaderPass
+
+
+

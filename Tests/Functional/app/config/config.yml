@@ -1,0 +1,60 @@
+parameters:
+    database_driver: pdo_sqlite
+    database_host: 127.0.0.1
+    database_port: 5432
+    database_name: trinity
+    database_user: tomas
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_port: 25
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+      driver:   "%database_driver%"
+      path:     "%kernel.cache_dir%/test.db"
+      host:     "%database_host%"
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+framework:
+    secret: "Three can keep a secret, if two of them are dead. MUHEHE."
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    router: { resource: "%kernel.root_dir%/routing.yml" }
+
+security:
+  providers:
+      fos_userbundle:
+          id: fos_user.user_provider.username
+
+      in_memory:
+          memory:
+              users:
+                  ryan:
+                      password: ryanpass
+                      roles: 'ROLE_ADMIN'
+
+  role_hierarchy:
+      ROLE_ADMIN:       ROLE_USER
+      ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+  firewalls:
+    dev:
+        pattern: ^/(_(profiler|wdt)|css|images|js)/
+        security: false
+
+grid:
+
+
+services:

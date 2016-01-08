@@ -1,14 +1,20 @@
 <?php
-
+/**
+ * This file is part of Trinity package.
+ */
 
 namespace Trinity\Bundle\GridBundle\DependencyInjection;
-
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
+
+/**
+ * Class GridExtension
+ * @package Trinity\Bundle\GridBundle\DependencyInjection
+ */
 class GridExtension extends Extension
 {
 
@@ -24,6 +30,6 @@ class GridExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('service.yml');
+        $loader->load('services.yml');
     }
 }
