@@ -18,7 +18,8 @@
     "dmishh/settings-bundle" : "dev-master",
     "twig/extensions" : ">=1.3",
     "friendsofsymfony/user-bundle": "dev-master",
-    "jms/serializer-bundle": "^1.1"
+    "jms/serializer-bundle": "^1.1",
+    "trinity/search": "dev-master"
   },
 
   "require-dev": {
