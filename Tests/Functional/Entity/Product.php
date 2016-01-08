@@ -16,6 +16,16 @@ use Trinity\FrameworkBundle\Entity\BaseProduct;
 class Product extends BaseProduct
 {
 
+    protected $id;
+
+
+    /**
+     * Product constructor.
+     */
+    public function __construct()
+    {
+        $this->id = 1;
+    }
 
 
 }
