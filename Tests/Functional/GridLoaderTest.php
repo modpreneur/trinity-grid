@@ -57,7 +57,7 @@ class GridLoaderTest extends WebTestCase
             [
                 [
                     'id'   => '1.', // global
-                    'name' => '1. John Dee', // template
+                    'name' => 'Template edit - John Dee', // template
                     'description' => 'Description.',
                     'nonexistentColumn' => '',
                     'createdAt' => '01/01/2010 00:00'
