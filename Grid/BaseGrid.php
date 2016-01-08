@@ -43,9 +43,9 @@ abstract class BaseGrid
      */
     public function defaultSetUp()
     {
-        $this->addFormat('id', '?.');
-        $this->addFormat('createAt', 'm/d/Y H:i');
-        $this->addFormat('updateAt', 'm/d/Y H:i');
+        $this->setColumnFormat('id', '?.');
+        $this->setColumnFormat('createAt', 'm/d/Y H:i');
+        $this->setColumnFormat('updateAt', 'm/d/Y H:i');
     }
 
 
@@ -97,7 +97,7 @@ abstract class BaseGrid
      *
      * @return BaseGrid
      */
-    public function addFormat($column, $format) : BaseGrid
+    public function setColumnFormat($column, $format) : BaseGrid
     {
         $this->format[$column] = $format;
 
