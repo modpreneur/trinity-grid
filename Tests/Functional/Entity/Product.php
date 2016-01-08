@@ -19,6 +19,7 @@ class Product extends BaseProduct
     protected $id;
 
 
+
     /**
      * Product constructor.
      */

@@ -51,7 +51,7 @@ class GridLoaderTest extends WebTestCase
         $container  = $kernel->getContainer();
         $manager = $container->get('trinity.grid.manager');
 
-        $array = $manager->convertEntitiesToArray( $this->getEntitiesErray(), ['id', 'name', 'description', 'nonexistentColumn'] );
+        $array = $manager->convertEntitiesToArray( $this->getEntitiesErray(), ['id', 'name', 'description', 'nonexistentColumn', 'createdAt'] );
 
         $this->assertEquals(
             [
@@ -59,7 +59,8 @@ class GridLoaderTest extends WebTestCase
                     'id'   => '1.',
                     'name' => '1. John Dee',
                     'description' => 'Description.',
-                    'nonexistentColumn' => ''
+                    'nonexistentColumn' => '',
+                    'createdAt' => '01/01/2010 00:00'
                 ]
             ],
             $array

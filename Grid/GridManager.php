@@ -112,21 +112,34 @@ class GridManager
 
             $row = [];
             foreach ($columns as $column) {
-                $string = "";
+                $item = "";
+                $edited = false;
 
                 try {
-                    $string = ObjectMixin::get($entity, $column);
+                    $item = ObjectMixin::get($entity, $column);
                 } catch (MemberAccessException $ex) {
 
                 }
 
                 foreach ($templates as $template) {
                     if ($template->hasBlock('cell_'.$column)) {
-                        $string = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'value' => $string]));
+                        $item = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'value' => $item]));
+                        $edited = true;
                     }
                 }
 
-                $row[$column] = $string;
+                if(!$edited){
+                    if($item instanceof \DateTime){
+                        $item = $item->format('m/d/Y H:i');
+                    }
+
+                    if(is_object($item) && method_exists($item, 'getName')){
+                        $item = $item->getName();
+                    }
+                }
+
+
+                $row[$column] = $item;
             }
 
             $arrayResult[] = $row;
