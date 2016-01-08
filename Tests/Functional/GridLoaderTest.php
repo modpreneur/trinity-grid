@@ -56,8 +56,8 @@ class GridLoaderTest extends WebTestCase
         $this->assertEquals(
             [
                 [
-                    'id'   => '1.',
-                    'name' => '1. John Dee',
+                    'id'   => '1.', // global
+                    'name' => '1. John Dee', // template
                     'description' => 'Description.',
                     'nonexistentColumn' => '',
                     'createdAt' => '01/01/2010 00:00'
@@ -65,6 +65,8 @@ class GridLoaderTest extends WebTestCase
             ],
             $array
         );
+
+
     }
 
 

@@ -20,6 +20,10 @@ abstract class BaseGrid
     protected $templates;
 
 
+    /** @var  array */
+    protected $format;
+
+
     /**
      * BaseGrid constructor.
      */
@@ -27,8 +31,21 @@ abstract class BaseGrid
     {
         $this->layout = "GridBundle::default_grid_layout.html.twig";
         $this->templates = [];
+        $this->format = [];
 
+        $this->defaultSetUp();
         $this->setUp();
+    }
+
+
+    /**
+     * Set default values for basic column. (id, createAt, updateAt)
+     */
+    public function defaultSetUp()
+    {
+        $this->addFormat('id', '?.');
+        $this->addFormat('createAt', 'm/d/Y H:i');
+        $this->addFormat('updateAt', 'm/d/Y H:i');
     }
 
 
@@ -72,5 +89,33 @@ abstract class BaseGrid
     {
         return $this->templates;
     }
+
+
+    /**
+     * @param string $column
+     * @param string $format
+     *
+     * @return BaseGrid
+     */
+    public function addFormat($column, $format) : BaseGrid
+    {
+        $this->format[$column] = $format;
+
+        return $this;
+    }
+
+
+    /**
+     * @param  string $column
+     * @return string
+     */
+    public function getFormat($column) : string
+    {
+        if( array_key_exists($column, $this->format))
+            return $this->format[$column];
+
+        return "";
+    }
+
 
 }

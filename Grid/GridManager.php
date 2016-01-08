@@ -112,13 +112,12 @@ class GridManager
 
             $row = [];
             foreach ($columns as $column) {
-                $item = "";
                 $edited = false;
 
                 try {
                     $item = ObjectMixin::get($entity, $column);
                 } catch (MemberAccessException $ex) {
-
+                    $item = "";
                 }
 
                 foreach ($templates as $template) {
@@ -128,13 +127,23 @@ class GridManager
                     }
                 }
 
-                if(!$edited){
-                    if($item instanceof \DateTime){
-                        $item = $item->format('m/d/Y H:i');
-                    }
+                if(!$edited && ($item instanceof \DateTime)){
+                    $format = $grid->getFormat($column);
+                    $item = $item->format($format != ""? $format : 'm/d/Y H:i');
+                    $edited = true;
+                }
 
-                    if(is_object($item) && method_exists($item, 'getName')){
-                        $item = $item->getName();
+                if(!$edited && (is_object($item) && method_exists($item, 'getName'))){
+                    $item = $item->getName();
+                    $edited = true;
+                }
+
+
+                if(!$edited){
+                    $format = $grid->getFormat($column);
+
+                    if($format !== ""){
+                        $item = str_replace("?", $item, $format);
                     }
                 }
 
