@@ -43,7 +43,7 @@ class GridManagerTest extends WebTestCase
         $container = $kernel->getContainer();
         $manager = $container->get('trinity.grid.manager');
 
-        $this->assertEquals('product', $manager->getGridNameFromEntieies($this->getEntitiesErray()));
+        $this->assertEquals('product', $manager->getGridNameFromEntieies($this->getEntitiesArray()));
     }
 
 
@@ -56,7 +56,7 @@ class GridManagerTest extends WebTestCase
         $manager = $container->get('trinity.grid.manager');
 
         $array = $manager->convertEntitiesToArray(
-            $this->getEntitiesErray(),
+            $this->getEntitiesArray(),
             ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']
         );
 
@@ -75,7 +75,7 @@ class GridManagerTest extends WebTestCase
     }
 
 
-    protected function getEntitiesErray() : array
+    protected function getEntitiesArray() : array
     {
         $productA = new Product();
 

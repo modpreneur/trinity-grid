@@ -61,7 +61,7 @@ From container pull service 'trinity.grid.manager'
 Parse array of entities:
     
     $stringArray = $manager->convertEntitiesToArray(
-                $this->getEntitiesErray(),                                          // array of entities
+                $this->getArrayOfEntities(),                                        // array of entities
                 ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']     // columns
             );
             
