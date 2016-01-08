@@ -25,9 +25,19 @@ abstract class BaseGrid
      */
     public function __construct()
     {
-        $this->layout = "TrinityGridBundle::default_grid_layout.html.twig";
+        $this->layout = "GridBundle::default_grid_layout.html.twig";
         $this->templates = [];
+
+        $this->setUp();
     }
+
+
+    /**
+     * Set up grid (template)
+     *
+     * @return void
+     */
+    public abstract function setUp();
 
 
     /**
@@ -42,12 +52,22 @@ abstract class BaseGrid
     }
 
 
+    /**
+     * Return twig layout
+     *
+     * @return string
+     */
     public function getLayout() : string
     {
         return $this->layout;
     }
 
 
+    /**
+     * Return twig templates.
+     *
+     * @return array
+     */
     public function getTemplates() : array
     {
         return $this->templates;

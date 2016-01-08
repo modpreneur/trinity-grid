@@ -1,5 +1,5 @@
 services:
   trinity.grid.test.product:
-    class: Trinity\Bundle\GridBundle\Tests\Functional\ProductGrid
+    class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\ProductGrid
     tags:
         - { name: trinity.grid, alias: product }

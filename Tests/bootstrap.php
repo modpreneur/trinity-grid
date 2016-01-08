@@ -1,4 +1,7 @@
 <?php
+/**
+ * This file is part of Trinity package.
+ */
 
 $file = __DIR__.'/../vendor/autoload.php';
 

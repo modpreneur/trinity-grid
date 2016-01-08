@@ -5,6 +5,11 @@
 
 namespace Trinity\Bundle\GridBundle\Grid;
 
+use JMS\Serializer\Serializer;
+use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
+use Trinity\FrameworkBundle\Exception\MemberAccessException;
+use Trinity\FrameworkBundle\Utils\ObjectMixin;
+
 
 /**
  * Class GridManager
@@ -21,13 +26,18 @@ class GridManager
     protected $twig;
 
 
+    /** @var  Serializer */
+    protected $serializer;
+
 
     /**
      * GridManager constructor.
+     * @param $twig
      */
-    public function __construct($e)
+    public function __construct($twig)
     {
-        $this->twig = new \Twig_Environment($e);
+        $this->twig = new \Twig_Environment($twig);
+
         $this->grids = [];
     }
 
@@ -38,7 +48,8 @@ class GridManager
      *
      * @return GridManager
      */
-    public function addGrid($alias, $grid) : GridManager{
+    public function addGrid($alias, $grid) : GridManager
+    {
         $this->grids[$alias] = $grid;
 
         return $this;
@@ -48,7 +59,7 @@ class GridManager
     /**
      * @return array
      */
-    public function getGrids() :array
+    public function getGrids() : array
     {
         return $this->grids;
     }
@@ -58,14 +69,96 @@ class GridManager
      * @param String $name
      * @return BaseGrid|null
      */
-    public function getGrid($name) : BaseGrid{
-        if(array_key_exists($name, $this->grids)){
-           return $this->grids[$name];
+    public function getGrid($name) : BaseGrid
+    {
+        if (array_key_exists($name, $this->grids)) {
+            return $this->grids[$name];
         }
 
         return null;
     }
 
 
+    /**
+     * @param array|\Iterator $entities
+     * @param array $columns
+     *
+     * @return array
+     * @throws InvalidArgumentException
+     * @throws MemberAccessException
+     */
+    public function convertEntitiesToArray($entities, $columns) : array
+    {
+        if (!$this->is_iterable($entities)) {
+            throw new InvalidArgumentException('Agrument \'entities\' is not iterable.');
+        }
+
+
+        $grid = $this->getGrid(
+            $this->getGridNameFromEntieies($entities)
+        );
+
+
+        $templates = [];
+        $templates[] = $this->twig->loadTemplate($grid->getLayout());
+
+        foreach ($grid->getTemplates() as $template) {
+            $templates[] = $this->twig->loadTemplate($template);
+        }
+
+        $arrayResult = [];
+
+        foreach ($entities as $entity) {
+
+            $row = [];
+            foreach ($columns as $column) {
+                $string = "";
+
+                try {
+                    $string = ObjectMixin::get($entity, $column);
+                } catch (MemberAccessException $ex) {
+
+                }
+
+                foreach ($templates as $template) {
+                    if ($template->hasBlock('cell_'.$column)) {
+                        $string = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'value' => $string]));
+                    }
+                }
+
+                $row[$column] = $string;
+            }
+
+            $arrayResult[] = $row;
+        }
+
+        return $arrayResult;
+    }
+
+
+    /**
+     * @param array $entities
+     * @return string
+     */
+    public function getGridNameFromEntieies($entities): string
+    {
+
+        /* Get name */
+        $first = reset($entities);
+        $rc = new \ReflectionClass($first);
+        $name = strtolower($rc->getShortName());
+
+        return $name;
+    }
+
+
+    /**
+     * @param object|[] $var
+     * @return bool
+     */
+    function is_iterable($var) : bool
+    {
+        return (is_array($var) || $var instanceof \Traversable);
+    }
 
 }

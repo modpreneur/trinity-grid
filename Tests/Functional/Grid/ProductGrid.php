@@ -3,7 +3,7 @@
  * This file is part of Trinity package.
  */
 
-namespace Trinity\Bundle\GridBundle\Tests\Functional;
+namespace Trinity\Bundle\GridBundle\Tests\Functional\Grid;
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
@@ -14,5 +14,8 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
  */
 class ProductGrid extends BaseGrid
 {
-
+    public function setUp()
+    {
+        $this->addTemplate("ProductGrid.html.twig");
+    }
 }

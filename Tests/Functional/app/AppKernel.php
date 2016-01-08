@@ -44,6 +44,7 @@ class AppKernel extends Kernel
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
             //new \FOS\UserBundle\FOSUserBundle(),
 
 

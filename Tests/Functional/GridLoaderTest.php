@@ -1,6 +1,12 @@
 <?php
+/**
+ * This file is part of Trinity package.
+ */
 
 namespace Trinity\Bundle\GridBundle\Tests\Functional;
+
+use Nette\Utils\DateTime;
+use Trinity\Bundle\GridBundle\Tests\Functional\Entity\Product;
 
 
 /**
@@ -21,7 +27,56 @@ class GridLoaderTest extends WebTestCase
             $this->assertInstanceOf("Trinity\\Bundle\\GridBundle\\Grid\\BaseGrid", $grid);
         }
 
-        $this->assertInstanceOf("Trinity\\Bundle\\GridBundle\\Tests\\Functional\\ProductGrid", $loader->getGrid('product'));
+        $this->assertInstanceOf(
+            "Trinity\\Bundle\\GridBundle\\Tests\\Functional\\Grid\\ProductGrid",
+            $loader->getGrid('product')
+        );
     }
 
+    public function testGetGridNameFromEntities(){
+
+        $kernel = $this->createClient()->getKernel();
+
+        $container  = $kernel->getContainer();
+        $manager = $container->get('trinity.grid.manager');
+
+        $this->assertEquals('product', $manager->getGridNameFromEntieies($this->getEntitiesErray()));
+    }
+
+
+    public function testConvert(){
+
+        $kernel = $this->createClient()->getKernel();
+
+        $container  = $kernel->getContainer();
+        $manager = $container->get('trinity.grid.manager');
+
+        $array = $manager->convertEntitiesToArray( $this->getEntitiesErray(), ["name", "description", 'nonexistentColumn'] );
+
+        $this->assertEquals(
+            [
+                [
+                    'name' => '1. John Dee',
+                    'description' => 'Description.',
+                    'nonexistentColumn' => ''
+                ]
+            ],
+            $array
+        );
+    }
+
+
+    protected function getEntitiesErray() : array {
+        $productA = new Product();
+
+        $productA
+            ->setName("John Dee")
+            ->setDescription("Description.")
+            ->setCreatedAt(DateTime::from("2010-1-1"))
+            ->setUpdatedAt(DateTime::from("2010-1-1"));
+
+        return [
+            $productA
+        ];
+    }
 }

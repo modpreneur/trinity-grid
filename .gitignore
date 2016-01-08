@@ -5,4 +5,4 @@
 .idea
 Tests/Functional/app/cache
 Tests/Functional/app/logs
-/.gitignore
+.gitignore
