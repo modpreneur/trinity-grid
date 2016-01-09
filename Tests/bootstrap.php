@@ -3,6 +3,7 @@
  * This file is part of Trinity package.
  */
 
+
 $file = __DIR__.'/../vendor/autoload.php';
 
 if (!file_exists($file)) {
@@ -13,6 +14,4 @@ if (!file_exists($file)) {
 }
 
 
-
-var_dump($file);
 $autoload = require_once $file;

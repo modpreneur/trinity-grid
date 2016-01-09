@@ -5,23 +5,26 @@ namespace Trinity\Bundle\GridBundle\Tests\Functional\app;
 // get the autoload file
 $dir = __DIR__;
 $lastDir = null;
+
 while ($dir !== $lastDir) {
     $lastDir = $dir;
     if (file_exists($dir.'/autoload.php')) {
-        require_once $dir.'/autoload.php';
+        $loader = require$dir.'/autoload.php';
         break;
     }
     if (file_exists($dir.'/autoload.php.dist')) {
-        require_once $dir.'/autoload.php.dist';
+        $loader = require $dir.'/autoload.php.dist';
         break;
     }
     if (file_exists($dir.'/vendor/autoload.php')) {
-        require_once $dir.'/vendor/autoload.php';
+        $loader = require $dir.'/vendor/autoload.php';
         break;
     }
     $dir = dirname($dir);
 }
 
+
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -45,11 +48,14 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             //new \FOS\UserBundle\FOSUserBundle(),
 
 
             new \Trinity\FrameworkBundle\TrinityFrameworkBundle(),
             new \Trinity\Bundle\GridBundle\GridBundle(),
+            new \Trinity\SearchBundle\SearchBundle()
         );
     }
 

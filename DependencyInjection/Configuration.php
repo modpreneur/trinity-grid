@@ -3,7 +3,7 @@
  * This file is part of Trinity package.
  */
 
-namespace Trinity\DependencyInjection;
+namespace Trinity\Bundle\GridBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

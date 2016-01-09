@@ -1,0 +1,3 @@
+grid:
+    path:      /grid/{entity}/{query}
+    defaults:  { _controller: GridBundle:Grid:grid }
