@@ -31,6 +31,7 @@ class GridController extends Controller
         /*  @todo - parse 2 parametr - > array of attributes
          *  @todo - Martin Matějka
          *
+         *
          */
         $arrayOfEntities = $gridManager->convertEntitiesToArray($entities, $query);
 
