@@ -159,12 +159,17 @@ class GridManager
     /**
      * @param array $entities
      * @return string
+     * @throws InvalidArgumentException
      */
     public function getGridNameFromEntieies($entities): string
     {
-
         /* Get name */
         $first = reset($entities);
+
+        if(!is_object($first)){
+            throw new InvalidArgumentException("Entities must be array of entities (array of objects).");
+        }
+
         $rc = new \ReflectionClass($first);
         $name = strtolower($rc->getShortName());
 
