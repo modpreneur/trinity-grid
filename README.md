@@ -53,6 +53,90 @@ Alias is mandatory value for searching grids from entity name.
 
 Product entity has product alias. 
 
+####Grid filters
+
+Filters are used to change the attribute values.
+
+#####Special grid:
+
+Special filters are used for changing specific attribute (id, name, etc.).
+
+1) Create filter:
+
+Filter -> BaseFilter or GridFilterInterface!
+
+Attribute 'name' is necessary!
+
+
+
+    class IdFilter extends BaseFilter
+    {
+    
+        /**
+         * @var string
+         */
+        protected $name = 'id';
+    
+    
+        /**
+         * @param string|object|int|bool $input
+         * @param array $arguments
+         * @return string
+         */
+        function process($input, array $arguments = []) : string
+        {
+            return $input.'.';
+        }
+    }
+    
+2) Grid registration:
+
+File: service.yml
+Tag: trinity.grid.filter
+    
+   
+  trinity.grid.filter.id:
+      class: Trinity\Bundle\GridBundle\Filter\IdFilter
+      tags:
+        - {name: "trinity.grid.filter"}
+    
+3) Set up filter for current grid:
+    
+     $this->setColumnFilter('id', 'id');
+     
+First attribute 'id' -> column name.
+
+Second attribute -> filter name.     
+
+#####Global filters
+
+For global filter must be set attribute 'global' to TRUE;
+
+Attribute 'name' is not necessary.
+
+
+    class ObjectFilter extends BaseFilter
+    {
+        protected $global = true;
+     
+        /**
+         * @param string|object|int|bool $input
+         * @param array $arguments
+         * @return string
+         */
+        function process($input, array $arguments = []) : string
+        {
+    
+            if ((is_object($input) && method_exists($input, 'getName'))) {
+                $input = $input->getName();
+            } elseif (is_object($input)) {
+                $input = (string)$input;
+            }
+    
+            return $input;
+        }
+    }
+
 ###3) Parse entity array to array of strings
 
 From container pull service 'trinity.grid.manager'

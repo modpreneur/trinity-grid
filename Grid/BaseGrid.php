@@ -44,9 +44,9 @@ abstract class BaseGrid
      */
     protected function defaultSetUp()
     {
-        $this->setColumnFormat('id', 'id');
-        $this->setColumnFormat('createdAt', 'dateTime');
-        $this->setColumnFormat('updatedAt', 'dateTime');
+        $this->setColumnFilter('id', 'id');
+        $this->setColumnFilter('createdAt', 'dateTime');
+        $this->setColumnFilter('updatedAt', 'dateTime');
     }
 
 
@@ -109,7 +109,7 @@ abstract class BaseGrid
      * @param string $column
      * @param string $format
      */
-    public function setColumnFormat($column, $format)
+    public function setColumnFilter($column, $format)
     {
         $this->columnFormat[$column] = $format;
     }

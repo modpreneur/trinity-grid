@@ -125,7 +125,6 @@ class GridManager
                     $filters = $this->getGlobalFilters();
                     foreach ($filters as $filter) {
                         $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
-                        break;
                     }
                 }
 
