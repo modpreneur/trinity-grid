@@ -25,15 +25,17 @@ class GridController extends Controller
     public function gridAction($entity, $query){
         $gridManager = $this->get('trinity.grid.manager');
 
-        //$search = $this->get('trinity.search');
-        //$entities = $search->query($query);
+        $search = $this->get('trinity.search');
 
-        /*  @todo - parse 2 parametr - > array of attributes
-         *  @todo - Martin Matějka
-         *
-         *
-         */
-        $arrayOfEntities = $gridManager->convertEntitiesToArray($entities, $query);
+        $nqlQuery = $search->queryTable($entity, $query);
+
+        $columns = [];
+
+        foreach($nqlQuery->getSelect()->getColumns() as $column) {
+            $columns[] = $column->getName();
+        }
+
+        $arrayOfEntities = $gridManager->convertEntitiesToArray($nqlQuery->getQueryBuilder()->getQuery()->getResult(), $columns);
 
         return new JsonResponse($arrayOfEntities);
     }
