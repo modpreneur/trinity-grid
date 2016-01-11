@@ -93,11 +93,9 @@ class GridManager
             throw new InvalidArgumentException('Agrument \'entities\' is not iterable.');
         }
 
-
         $grid = $this->getGrid(
             $this->getGridNameFromEntieies($entities)
         );
-
 
         $templates = [];
         $templates[] = $this->twig->loadTemplate($grid->getLayout());
