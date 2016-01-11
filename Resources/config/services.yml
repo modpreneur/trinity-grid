@@ -5,5 +5,27 @@ services:
       - @twig.loader.filesystem
 
 
+  trinity.grid.filter.date_time:
+    class: Trinity\Bundle\GridBundle\Filter\DateTimeFilter
+    tags:
+      - {name: "trinity.grid.filter"}
 
 
+  trinity.grid.filter.id:
+      class: Trinity\Bundle\GridBundle\Filter\IdFilter
+      tags:
+        - {name: "trinity.grid.filter"}
+
+
+  trinity.grid.filter.twig:
+      class: Trinity\Bundle\GridBundle\Filter\TwigFilter
+      arguments:
+          - @twig.loader.filesystem
+      tags:
+          - {name: "trinity.grid.filter"}
+
+
+  trinity.grid.filter.object:
+      class: Trinity\Bundle\GridBundle\Filter\ObjectFilter
+      tags:
+          - {name: "trinity.grid.filter"}

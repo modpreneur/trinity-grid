@@ -13,7 +13,7 @@ class ControllerTest extends WebTestCase
         $client = $this->createClient();
         $r = $client->request('GET', '/grid/product/query');
 
-        dump(substr($r->html(), 0, 1000));
+        //dump(substr($r->html(), 0, 1000));
     }
 
 }

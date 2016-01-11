@@ -5,8 +5,8 @@
 
 namespace Trinity\Bundle\GridBundle\Grid;
 
-use JMS\Serializer\Serializer;
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
+use Trinity\Bundle\GridBundle\Filter\GridFilterInterface;
 use Trinity\FrameworkBundle\Exception\MemberAccessException;
 use Trinity\FrameworkBundle\Utils\ObjectMixin;
 
@@ -22,22 +22,16 @@ class GridManager
      */
     protected $grids;
 
-    /** @var  \Twig_Environment */
-    protected $twig;
 
-
-    /** @var  Serializer */
-    protected $serializer;
+    /** @var  GridFilterInterface[] */
+    protected $filter = [];
 
 
     /**
      * GridManager constructor.
-     * @param $twig
      */
-    public function __construct($twig)
+    public function __construct()
     {
-        $this->twig = new \Twig_Environment($twig);
-
         $this->grids = [];
     }
 
@@ -97,12 +91,6 @@ class GridManager
             $this->getGridNameFromEntieies($entities)
         );
 
-        $templates = [];
-        $templates[] = $this->twig->loadTemplate($grid->getLayout());
-
-        foreach ($grid->getTemplates() as $template) {
-            $templates[] = $this->twig->loadTemplate($template);
-        }
 
         $arrayResult = [];
 
@@ -110,43 +98,38 @@ class GridManager
 
             $row = [];
             foreach ($columns as $column) {
-                $edited = false;
+
+                $value = null;
 
                 try {
-                    $item = ObjectMixin::get($entity, $column);
+                    if (is_object($entity)) {
+                        $value = ObjectMixin::get($entity, $column);
+                    } elseif (is_array($entity)) {
+                        $value = $entity[$column];
+                    } else {
+                        throw new InvalidArgumentException("Wrong format for entities.");
+                    }
+
                 } catch (MemberAccessException $ex) {
-                    $item = "";
+                    $value = "";
                 }
 
-                foreach ($templates as $template) {
-                    if ($template->hasBlock('cell_'.$column)) {
-                        $item = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'value' => $item]));
-                        $edited = true;
+                $filter = $grid->getColumnFormat($column);
+
+                if (!empty($filter)) {
+                    // specific filter
+                    $filter = $this->getFilter($filter);
+                    $value  = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
+                } else {
+                    /** @var GridFilterInterface[] $filters */
+                    $filters = $this->getGlobalFilters();
+                    foreach ($filters as $filter) {
+                        $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
+                        break;
                     }
                 }
 
-                if(!$edited && ($item instanceof \DateTime)){
-                    $format = $grid->getFormat($column);
-                    $item = $item->format($format != ""? $format : 'm/d/Y H:i');
-                    $edited = true;
-                }
-
-                if(!$edited && (is_object($item) && method_exists($item, 'getName'))){
-                    $item = $item->getName();
-                    $edited = true;
-                }
-
-
-                if(!$edited){
-                    $format = $grid->getFormat($column);
-
-                    if($format !== ""){
-                        $item = str_replace("?", $item, $format);
-                    }
-                }
-
-
-                $row[$column] = $item;
+                $row[$column] = $value;
             }
 
             $arrayResult[] = $row;
@@ -166,7 +149,7 @@ class GridManager
         /* Get name */
         $first = reset($entities);
 
-        if(!is_object($first)){
+        if (!is_object($first)) {
             throw new InvalidArgumentException("Entities must be array of entities (array of objects).");
         }
 
@@ -184,6 +167,50 @@ class GridManager
     function is_iterable($var) : bool
     {
         return (is_array($var) || $var instanceof \Traversable);
+    }
+
+
+    /**
+     *
+     * @param GridFilterInterface $gridFilterInterface
+     * @return GridManager
+     */
+    public function addFilter(GridFilterInterface $gridFilterInterface) : GridManager
+    {
+        if(!empty($gridFilterInterface->getName()))
+            $this->filter[$gridFilterInterface->getName()] = $gridFilterInterface;
+        else
+            $this->filter[] = $gridFilterInterface;
+
+        return $this;
+    }
+
+
+    /**
+     * @param $column
+     * @return GridFilterInterface
+     */
+    public function getFilter($column) : GridFilterInterface
+    {
+        if (array_key_exists($column, $this->filter)) {
+            return $this->filter[$column];
+        }
+
+        throw new \BadFunctionCallException("Filter '$column' does not exists.");
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getGlobalFilters()
+    {
+        return array_filter(
+            $this->filter,
+            function (GridFilterInterface $v) {
+                return $v->isGlobal();
+            }
+        );
     }
 
 }

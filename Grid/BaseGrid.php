@@ -6,6 +6,7 @@
 namespace Trinity\Bundle\GridBundle\Grid;
 
 
+
 /**
  * Class BaseGrid
  * @package Trinity\Grid
@@ -15,13 +16,12 @@ abstract class BaseGrid
     /** @var  string */
     protected $layout;
 
-
     /** @var  string[] */
     protected $templates;
 
 
-    /** @var  array */
-    protected $format;
+    /** @var   string[] */
+    protected $columnFormat;
 
 
     /**
@@ -32,6 +32,7 @@ abstract class BaseGrid
         $this->layout = "GridBundle::default_grid_layout.html.twig";
         $this->templates = [];
         $this->format = [];
+        $this->columnFormat = [];
 
         $this->defaultSetUp();
         $this->setUp();
@@ -41,11 +42,11 @@ abstract class BaseGrid
     /**
      * Set default values for basic column. (id, createAt, updateAt)
      */
-    public function defaultSetUp()
+    protected function defaultSetUp()
     {
-        $this->setColumnFormat('id', '?.');
-        $this->setColumnFormat('createAt', 'm/d/Y H:i');
-        $this->setColumnFormat('updateAt', 'm/d/Y H:i');
+        $this->setColumnFormat('id', 'id');
+        $this->setColumnFormat('createdAt', 'dateTime');
+        $this->setColumnFormat('updatedAt', 'dateTime');
     }
 
 
@@ -54,7 +55,7 @@ abstract class BaseGrid
      *
      * @return void
      */
-    public abstract function setUp();
+    protected abstract function setUp();
 
 
     /**
@@ -92,30 +93,28 @@ abstract class BaseGrid
 
 
     /**
-     * @param string $column
-     * @param string $format
-     *
-     * @return BaseGrid
+     * @param $column
+     * @return string|null
      */
-    public function setColumnFormat($column, $format) : BaseGrid
+    public function getColumnFormat($column) : string
     {
-        $this->format[$column] = $format;
+        if(array_key_exists($column, $this->columnFormat))
+            return $this->columnFormat[$column];
 
-        return $this;
+        return '';
     }
 
 
     /**
-     * @param  string $column
-     * @return string
+     * @param string $column
+     * @param string $format
      */
-    public function getFormat($column) : string
+    public function setColumnFormat($column, $format)
     {
-        if( array_key_exists($column, $this->format))
-            return $this->format[$column];
-
-        return "";
+        $this->columnFormat[$column] = $format;
     }
+
+
 
 
 }

@@ -14,8 +14,10 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
  */
 class ProductGrid extends BaseGrid
 {
-    public function setUp()
+
+    protected function setUp()
     {
         $this->addTemplate("ProductGrid.html.twig");
     }
+
 }
