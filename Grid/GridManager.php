@@ -114,19 +114,19 @@ class GridManager
                     $value = "";
                 }
 
+                // specific filter
                 $filter = $grid->getColumnFormat($column);
-
                 if (!empty($filter)) {
-                    // specific filter
                     $filter = $this->getFilter($filter);
-                    $value  = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
-                } else {
-                    /** @var GridFilterInterface[] $filters */
-                    $filters = $this->getGlobalFilters();
-                    foreach ($filters as $filter) {
-                        $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
-                    }
+                    $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
                 }
+
+                /** @var GridFilterInterface[] $filters */
+                $filters = $this->getGlobalFilters();
+                foreach ($filters as $filter) {
+                    $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
+                }
+
 
                 $row[$column] = $value;
             }
