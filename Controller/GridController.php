@@ -35,7 +35,7 @@ class GridController extends Controller
             $columns[] = $column->getName();
         }
 
-        $arrayOfEntities = $gridManager->convertEntitiesToArray($nqlQuery->getQueryBuilder()->getQuery()->getResult(), $columns);
+        $arrayOfEntities = $gridManager->convertEntitiesToArray($nqlQuery->getQueryBuilder(true)->getQuery()->getResult(), $columns);
 
         return new JsonResponse($arrayOfEntities);
     }
