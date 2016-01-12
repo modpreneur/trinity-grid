@@ -32,10 +32,10 @@ class GridController extends Controller
         $columns = [];
 
         foreach($nqlQuery->getSelect()->getColumns() as $column) {
-            $columns[] = $column->getName();
+            $columns[] = $column->getFullName();
         }
 
-        $arrayOfEntities = $gridManager->convertEntitiesToArray($nqlQuery->getQueryBuilder(true)->getQuery()->getResult(), $columns);
+        $arrayOfEntities = $gridManager->convertEntitiesToArray($search, $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(), $columns);
 
         return new JsonResponse($arrayOfEntities);
     }

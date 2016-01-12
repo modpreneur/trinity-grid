@@ -81,7 +81,7 @@ class GridManager
      * @throws InvalidArgumentException
      * @throws MemberAccessException
      */
-    public function convertEntitiesToArray($entities, $columns) : array
+    public function convertEntitiesToArray($search, $entities, $columns) : array
     {
         if (!$this->is_iterable($entities)) {
             throw new InvalidArgumentException('Agrument \'entities\' is not iterable.');
@@ -99,20 +99,22 @@ class GridManager
             $row = [];
             foreach ($columns as $column) {
 
-                $value = null;
+//                $value = null;
+//
+//                try {
+//                    if (is_object($entity)) {
+//                        $value = ObjectMixin::get($entity, $column);
+//                    } elseif (is_array($entity)) {
+//                        $value = $entity[$column];
+//                    } else {
+//                        throw new InvalidArgumentException("Wrong format for entities.");
+//                    }
+//
+//                } catch (MemberAccessException $ex) {
+//                    $value = "";
+//                }
 
-                try {
-                    if (is_object($entity)) {
-                        $value = ObjectMixin::get($entity, $column);
-                    } elseif (is_array($entity)) {
-                        $value = $entity[$column];
-                    } else {
-                        throw new InvalidArgumentException("Wrong format for entities.");
-                    }
-
-                } catch (MemberAccessException $ex) {
-                    $value = "";
-                }
+                $value = $search->getValue($entity, $column);
 
                 // specific filter
                 $filter = $grid->getColumnFormat($column);
