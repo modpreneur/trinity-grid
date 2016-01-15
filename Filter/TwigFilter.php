@@ -38,7 +38,7 @@ class TwigFilter extends BaseFilter
      * @param array $arguments
      * @return string
      */
-    function process($input, array $arguments = []) : string
+    function process($input, array $arguments = [])
     {
 
         /** @var BaseGrid $grid */
@@ -64,7 +64,7 @@ class TwigFilter extends BaseFilter
 
         foreach ($templates as $template) {
             if ($template->hasBlock('cell_'.$column)) {
-                $input = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'value' => $input]));
+                $input = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'entity' => $entity, 'value' => $input]));
             }
         }
 

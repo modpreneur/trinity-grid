@@ -3,3 +3,9 @@ services:
     class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\ProductGrid
     tags:
         - { name: trinity.grid, alias: product }
+
+
+  trinity.grid.test.user:
+      class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\UserGrid
+      tags:
+          - { name: trinity.grid, alias: user }

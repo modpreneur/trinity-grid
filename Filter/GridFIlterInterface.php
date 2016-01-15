@@ -18,7 +18,7 @@ interface GridFilterInterface
      * @param array $arguments
      * @return string
      */
-    function process($input, array $arguments = []) : string ;
+    function process($input, array $arguments = []) ;
 
 
     /**

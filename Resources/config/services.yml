@@ -23,9 +23,3 @@ services:
           - "@twig.loader.filesystem"
       tags:
           - {name: "trinity.grid.filter"}
-
-
-  trinity.grid.filter.object:
-      class: Trinity\Bundle\GridBundle\Filter\ObjectFilter
-      tags:
-          - {name: "trinity.grid.filter"}

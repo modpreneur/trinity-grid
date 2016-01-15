@@ -1,0 +1,11 @@
+{% block cell_firstName %} Mr. {{ value }} {% endblock %}
+{% block cell_lastName %} {{ value }} {% endblock %}
+{% block cell_address_city %} {{ value }} {% endblock %}
+{% block cell_fullName %} {{ row.firstName }} {{ row.lastName }} {% endblock %}
+{% block cell_groups %}
+    <ul>
+    {% for group in value %}
+        <li>{{ group.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

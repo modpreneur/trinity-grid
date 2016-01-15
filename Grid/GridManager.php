@@ -99,34 +99,20 @@ class GridManager
             $row = [];
             foreach ($columns as $column) {
 
-//                $value = null;
-//
-//                try {
-//                    if (is_object($entity)) {
-//                        $value = ObjectMixin::get($entity, $column);
-//                    } elseif (is_array($entity)) {
-//                        $value = $entity[$column];
-//                    } else {
-//                        throw new InvalidArgumentException("Wrong format for entities.");
-//                    }
-//
-//                } catch (MemberAccessException $ex) {
-//                    $value = "";
-//                }
-
-                $value = $search->getValue($entity, $column);
+                $value = self::getValue($entity, $column);
 
                 // specific filter
                 $filter = $grid->getColumnFormat($column);
                 if (!empty($filter)) {
                     $filter = $this->getFilter($filter);
-                    $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
+                    $value = $filter->process($value, ['column' => str_replace('.','_', $column), 'entity' => $entity, 'grid' => $grid]);
                 }
 
                 /** @var GridFilterInterface[] $filters */
                 $filters = $this->getGlobalFilters();
+
                 foreach ($filters as $filter) {
-                    $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
+                    $value = $filter->process($value, ['column' => str_replace('.','_', $column), 'entity' => $entity, 'grid' => $grid]);
                 }
 
                 $row[$column] = $value;
@@ -134,8 +120,29 @@ class GridManager
 
             $arrayResult[] = $row;
         }
+        //$this->dumpDie($arrayResult);
 
         return $arrayResult;
+    }
+
+    public static function getValue($entity, $value) {
+        $values = explode(".", $value);
+        return self::getObject($entity, $values, 0);
+    }
+
+    private static function getObject($entity, $values, $curValueIndex) {
+        try {
+            $obj = ObjectMixin::get($entity, $values[$curValueIndex]);
+            if ($curValueIndex == count($values) - 1) {
+                return $obj;
+            } else if (is_object($obj)) {
+                return self::getObject($obj, $values, $curValueIndex + 1);
+            } else {
+                return $obj;
+            }
+        } catch(\Exception $ex) {
+            return "";
+        }
     }
 
 
@@ -212,6 +219,11 @@ class GridManager
                 return $v->isGlobal();
             }
         );
+    }
+
+    private function dumpDie($what) {
+        \Symfony\Component\VarDumper\VarDumper::dump($what);
+        exit;
     }
 
 }

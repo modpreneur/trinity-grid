@@ -19,7 +19,7 @@ class ObjectFilter extends BaseFilter
      * @param array $arguments
      * @return string
      */
-    function process($input, array $arguments = []) : string
+    function process($input, array $arguments = [])
     {
 
         if ((is_object($input) && method_exists($input, 'getName'))) {
