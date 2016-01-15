@@ -129,7 +129,6 @@ class GridManager
                     $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
                 }
 
-
                 $row[$column] = $value;
             }
 
@@ -178,10 +177,11 @@ class GridManager
      */
     public function addFilter(GridFilterInterface $gridFilterInterface) : GridManager
     {
-        if(!empty($gridFilterInterface->getName()))
+        if (!empty($gridFilterInterface->getName())) {
             $this->filter[$gridFilterInterface->getName()] = $gridFilterInterface;
-        else
+        } else {
             $this->filter[] = $gridFilterInterface;
+        }
 
         return $this;
     }

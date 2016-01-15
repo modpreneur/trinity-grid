@@ -15,7 +15,8 @@ parameters:
     debug_toolbar: true
     debug_redirects: false
     use_assetic_controller: true
-    locale: en
+    trinity.search.doctrine_prefix: "Grid"
+    trinity.search.namespace: "Trinity\\Bundle\\GridBundle\\Tests\\Functional\\Entity"
 
 # Doctrine Configuration
 doctrine:
@@ -25,7 +26,14 @@ doctrine:
       host:     "%database_host%"
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        auto_mapping: false
+        mappings:
+          GridBundle:
+            type: annotation
+            dir: '%kernel.root_dir%/../Entity'
+            is_bundle: false
+            prefix: Trinity\Bundle\GridBundle\Tests\Functional\Entity
+            alias: Grid
 
 framework:
     secret: "Three can keep a secret, if two of them are dead. MUHEHE."

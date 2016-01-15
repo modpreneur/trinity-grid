@@ -8,14 +8,15 @@ namespace Trinity\Bundle\GridBundle\Tests\Functional\Entity;
 
 use Trinity\FrameworkBundle\Entity\BaseProduct;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Product
  * @package Trinity\Bundle\GridBundle\Tests\Functional\Entity
  *
- * @UniqueEntity(fields="name")
+ * @ORM\Table()
+ * @ORM\Entity()
  */
 class Product
 {
@@ -33,7 +34,6 @@ class Product
     /**
      * @var string Name of the product
      * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
      */
     protected $name;
 
