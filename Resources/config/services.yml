@@ -2,7 +2,7 @@ services:
   trinity.grid.manager:
     class: Trinity\Bundle\GridBundle\Grid\GridManager
     arguments:
-      - @twig.loader.filesystem
+      - "@twig.loader.filesystem"
 
 
   trinity.grid.filter.date_time:
@@ -20,7 +20,7 @@ services:
   trinity.grid.filter.twig:
       class: Trinity\Bundle\GridBundle\Filter\TwigFilter
       arguments:
-          - @twig.loader.filesystem
+          - "@twig.loader.filesystem"
       tags:
           - {name: "trinity.grid.filter"}
 
