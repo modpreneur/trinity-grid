@@ -20,6 +20,6 @@ services:
   trinity.grid.filter.twig:
       class: Trinity\Bundle\GridBundle\Filter\TwigFilter
       arguments:
-          - "@twig.loader.filesystem"
+          - "@twig"
       tags:
           - {name: "trinity.grid.filter"}
