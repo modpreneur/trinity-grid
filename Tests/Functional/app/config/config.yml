@@ -47,7 +47,7 @@ framework:
 
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
+    debug:            true
     strict_variables: "%kernel.debug%"
 
 grid:

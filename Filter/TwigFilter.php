@@ -28,7 +28,8 @@ class TwigFilter extends BaseFilter
      */
     public function __construct($twig)
     {
-        $this->twig = new \Twig_Environment($twig);
+        $this->twig = new \Twig_Environment($twig, ['debug' => true]);
+        $this->twig->addExtension(new \Twig_Extension_Debug());
     }
 
 

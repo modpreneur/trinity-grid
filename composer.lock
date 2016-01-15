@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b6ff9d76580c59b6d905b88fc229c953",
-    "content-hash": "c3968aeb7a3f2b8afd1aa2cb5d0b026e",
+    "hash": "2ae9ff9b24efb60aa1786d73ed9b9e82",
+    "content-hash": "ec8709a5af2590ca91bb55ee6f2e7561",
     "packages": [
         {
             "name": "apy/datagrid-bundle",
@@ -2556,16 +2556,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.8.x-dev",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4ff05e0e5e555dbd76be0a2d57f67dde3fe05a56"
+                "reference": "f3e6a82bcbea4db3b56df08e491e20a1faae82b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4ff05e0e5e555dbd76be0a2d57f67dde3fe05a56",
-                "reference": "4ff05e0e5e555dbd76be0a2d57f67dde3fe05a56",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/f3e6a82bcbea4db3b56df08e491e20a1faae82b5",
+                "reference": "f3e6a82bcbea4db3b56df08e491e20a1faae82b5",
                 "shasum": ""
             },
             "require": {
@@ -2685,7 +2685,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-01-14 13:31:24"
+            "time": "2016-01-14 12:01:11"
         },
         {
             "name": "trinity/framework",
@@ -2749,12 +2749,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "89cc6f3bfb5f910abe1ad062945ba5fceb55b6fd"
+                "reference": "188d5eeb5bcb72ab44c432d48b1d7403b047a541"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/89cc6f3bfb5f910abe1ad062945ba5fceb55b6fd",
-                "reference": "89cc6f3bfb5f910abe1ad062945ba5fceb55b6fd",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/188d5eeb5bcb72ab44c432d48b1d7403b047a541",
+                "reference": "188d5eeb5bcb72ab44c432d48b1d7403b047a541",
                 "shasum": ""
             },
             "require": {
@@ -2798,7 +2798,7 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-01-14 15:58:39"
+            "time": "2016-01-15 09:22:19"
         },
         {
             "name": "twig/extensions",
@@ -4051,6 +4051,69 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2015-06-21 13:59:46"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "c6c8f6195ee77f4e89cafa94f2dc738314349b88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/c6c8f6195ee77f4e89cafa94f2dc738314349b88",
+                "reference": "c6c8f6195ee77f4e89cafa94f2dc738314349b88",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "twig/twig": "~1.20|~2.0"
+            },
+            "suggest": {
+                "ext-symfony_debug": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony mechanism for exploring and dumping PHP variables",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "time": "2016-01-14 09:13:44"
         }
     ],
     "aliases": [],
