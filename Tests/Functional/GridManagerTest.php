@@ -56,6 +56,7 @@ class GridManagerTest extends WebTestCase
         $manager = $container->get('trinity.grid.manager');
 
         $array = $manager->convertEntitiesToArray(
+            $this->get('trinity.search'),
             $this->getEntitiesArray(),
             ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']
         );
@@ -80,9 +81,12 @@ class GridManagerTest extends WebTestCase
     {
         $productA = new Product();
 
-        $productA->setName("John Dee")->setDescription("Description.")->setCreatedAt(
-                DateTime::from("2010-1-1")
-            )->setUpdatedAt(DateTime::from("2010-1-1"));
+        $productA->setName("John Dee");
+        $productA->setDescription("Description.");
+        $productA->setCreatedAt(
+            DateTime::from("2010-1-1")
+        );
+        $productA->setUpdatedAt(DateTime::from("2010-1-1"));
 
         return [
             $productA,

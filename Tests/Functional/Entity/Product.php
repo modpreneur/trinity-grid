@@ -5,11 +5,8 @@
 
 namespace Trinity\Bundle\GridBundle\Tests\Functional\Entity;
 
-
-use Trinity\FrameworkBundle\Entity\BaseProduct;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Class Product
@@ -20,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
+
     use ORMBehaviors\Timestampable\Timestampable;
 
     /**
@@ -29,7 +27,8 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected $id = 1;
+
 
     /**
      * @var string Name of the product
@@ -37,25 +36,23 @@ class Product
      */
     protected $name;
 
+
     /**
-     * @var string Description of the product
-     * @ORM\Column(type="string", nullable = true)
+     * @ORM\OneToOne(targetEntity="Shipping", inversedBy="product")
+     * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
      */
-    protected $description;
+    private $shipping;
 
 
     /**
-     * Product constructor.
-     */
-    public function __construct()
-    {
-        $this->id = 1;
-    }
-
-
-    /**
-     * Get id.
+     * @var string
      *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $description;
+
+
+    /**
      * @return int
      */
     public function getId()
@@ -65,23 +62,6 @@ class Product
 
 
     /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return BaseProduct
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-
-    /**
-     * Get name.
-     *
      * @return string
      */
     public function getName()
@@ -91,23 +71,69 @@ class Product
 
 
     /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return BaseProduct
+     * @param string $name
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->description = $description;
-
-        return $this;
+        $this->name = $name;
     }
 
 
     /**
-     * Get description.
-     *
+     * @return mixed
+     */
+    public function getShipping()
+    {
+        return $this->shipping;
+    }
+
+
+    /**
+     * @param mixed $shipping
+     */
+    public function setShipping($shipping)
+    {
+        $this->shipping = $shipping;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+
+    /**
      * @return string
      */
     public function getDescription()
@@ -117,11 +143,11 @@ class Product
 
 
     /**
-     * @return string
+     * @param string $description
      */
-    public function __toString()
+    public function setDescription($description)
     {
-        return (string)$this->getName();
+        $this->description = $description;
     }
 
 }
