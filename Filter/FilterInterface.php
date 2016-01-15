@@ -7,10 +7,10 @@ namespace Trinity\Bundle\GridBundle\Filter;
 
 
 /**
- * Interface GridFIlterInterface
+ * Interface FilterInterface
  * @package Trinity\Bundle\GridBundle\Filter
  */
-interface GridFilterInterface
+interface FilterInterface
 {
 
     /**
