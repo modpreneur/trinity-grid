@@ -63,7 +63,7 @@ Special filters are used for changing specific attribute (id, name, etc.).
 
 1) Create filter:
 
-Filter -> BaseFilter or GridFilterInterface!
+Filter -> BaseFilter or FilterInterface!
 
 Attribute 'name' is necessary!
 

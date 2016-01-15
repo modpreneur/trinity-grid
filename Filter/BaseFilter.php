@@ -8,9 +8,9 @@ namespace Trinity\Bundle\GridBundle\Filter;
 
 /**
  * Class BaseFilter
- * @package Trinity\Bundle\GridBundle\Grid\Filter
+ * @package Trinity\Bundle\GridBundle\Filter
  */
-abstract class BaseFilter implements GridFilterInterface
+abstract class BaseFilter implements FilterInterface
 {
     /** @var string */
     protected $name = "";

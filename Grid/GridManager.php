@@ -6,7 +6,7 @@
 namespace Trinity\Bundle\GridBundle\Grid;
 
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
-use Trinity\Bundle\GridBundle\Filter\GridFilterInterface;
+use Trinity\Bundle\GridBundle\Filter\FilterInterface;
 use Trinity\FrameworkBundle\Exception\MemberAccessException;
 use Trinity\FrameworkBundle\Utils\ObjectMixin;
 
@@ -23,7 +23,7 @@ class GridManager
     protected $grids;
 
 
-    /** @var  GridFilterInterface[] */
+    /** @var  FilterInterface[] */
     protected $filter = [];
 
 
@@ -123,7 +123,7 @@ class GridManager
                     $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
                 }
 
-                /** @var GridFilterInterface[] $filters */
+                /** @var FilterInterface[] $filters */
                 $filters = $this->getGlobalFilters();
                 foreach ($filters as $filter) {
                     $value = $filter->process($value, ['column' => $column, 'entity' => $entity, 'grid' => $grid]);
@@ -172,15 +172,15 @@ class GridManager
 
     /**
      *
-     * @param GridFilterInterface $gridFilterInterface
+     * @param FilterInterface $FilterInterface
      * @return GridManager
      */
-    public function addFilter(GridFilterInterface $gridFilterInterface) : GridManager
+    public function addFilter(FilterInterface $FilterInterface) : GridManager
     {
-        if (!empty($gridFilterInterface->getName())) {
-            $this->filter[$gridFilterInterface->getName()] = $gridFilterInterface;
+        if (!empty($FilterInterface->getName())) {
+            $this->filter[$FilterInterface->getName()] = $FilterInterface;
         } else {
-            $this->filter[] = $gridFilterInterface;
+            $this->filter[] = $FilterInterface;
         }
 
         return $this;
@@ -189,9 +189,9 @@ class GridManager
 
     /**
      * @param $column
-     * @return GridFilterInterface
+     * @return FilterInterface
      */
-    public function getFilter($column) : GridFilterInterface
+    public function getFilter($column) : FilterInterface
     {
         if (array_key_exists($column, $this->filter)) {
             return $this->filter[$column];
@@ -208,7 +208,7 @@ class GridManager
     {
         return array_filter(
             $this->filter,
-            function (GridFilterInterface $v) {
+            function (FilterInterface $v) {
                 return $v->isGlobal();
             }
         );
