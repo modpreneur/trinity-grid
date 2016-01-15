@@ -51,6 +51,9 @@ class TwigFilter extends BaseFilter
         /** @var object $entity */
         $entity    = $arguments['entity'];
 
+        if(is_array($column)){
+            $column = join('_', $column);
+        }
 
         $templates   = [];
         $templates[] = $this->twig->loadTemplate($grid->getLayout());
