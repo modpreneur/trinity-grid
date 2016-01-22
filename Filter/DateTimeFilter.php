@@ -29,6 +29,10 @@ class DateTimeFilter extends BaseFilter
      */
     function process($input, array $arguments = []) : string
     {
+        if(is_null($input)) {
+            return "";
+        }
+
         if($input instanceof \DateTime){
             return $input->format(self::GLOBAL_FORMAT);
         }

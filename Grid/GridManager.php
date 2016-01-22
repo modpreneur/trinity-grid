@@ -87,9 +87,10 @@ class GridManager
             throw new InvalidArgumentException('Agrument \'entities\' is not iterable.');
         }
 
-        $grid = $this->getGrid(
-            $this->getGridNameFromEntieies($entities)
-        );
+        if(count($entities) > 0)
+            $grid = $this->getGrid(
+                $this->getGridNameFromEntities($entities)
+            );
 
 
         $arrayResult = [];
@@ -151,7 +152,7 @@ class GridManager
      * @return string
      * @throws InvalidArgumentException
      */
-    public function getGridNameFromEntieies($entities): string
+    public function getGridNameFromEntities($entities): string
     {
         /* Get name */
         $first = reset($entities);
