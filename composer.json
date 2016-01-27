@@ -16,7 +16,7 @@
     "nette/utils": "~2.3",
     "trinity/framework": "dev-master",
     "twig/extensions" : "~1.3",
-    "friendsofsymfony/user-bundle": "~1.3",
+    "friendsofsymfony/user-bundle": "dev-master",
     "jms/serializer-bundle": "~1.1",
     "trinity/search": "dev-master",
     "sensio/framework-extra-bundle": "~3.0"
