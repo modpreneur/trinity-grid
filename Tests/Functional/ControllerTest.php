@@ -11,9 +11,11 @@ class ControllerTest extends WebTestCase
 
     public function testIndex(){
         $client = $this->createClient();
-        $r = $client->request('GET', '/grid/product/query');
+        $r = $client->request('GET', '/grid/product?q=test');
 
         //dump(substr($r->html(), 0, 1000));
+
+        $this->assertEquals(1, 1);
     }
 
 }
