@@ -20,14 +20,14 @@ Create class extended by BaseGrid. Add templates for change attributes value.
     {
         public function setUp()
         {
-            $this->addTemplate("ProductGrid.html.twig");
+            $this->addTemplate("ProductGrid.html.twig"); // add new twig template for changing values.
         }
     }
     
     
 #####Set up
     addTemplate     - add new template for changing values. 
-    setColumnFormat - for basic change value of date or simple text edit.
+    setColumnFormat - for basic change value of date or simple text edit. @todo Jancar example (dog eyes, nicely please)
     
 #####Template:
     
@@ -40,46 +40,32 @@ For change value of cell use block cell_attributeName.
 - row = entity object
     
     
-###2) Register Grid Template
+####2) Register Grid Template
 
-File: services.yml 
-  
+In services.yml
+
     services:
       trinity.grid.test.product:
         class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\ProductGrid
         tags:
-            - { name: trinity.grid, alias: product }
-            
-Tag name: trinity.grid  
-Alias is mandatory value for searching grids from entity name. 
+            - { name: trinity.grid, alias: product } // tag name have to be trinity.grid, alias is mandatory value for searching grids from entity name.
 
-Product entity has product alias. 
 
-####Grid filters
+###Grid filters
 
 Filters are used to change the attribute values.
 
-#####Special grid:
-
-Special filters are used for changing specific attribute (id, name, etc.).
-
-1) Create filter:
+####1) Create filter:
 
 Filter -> BaseFilter or FilterInterface!
 
-Attribute 'name' is necessary!
-
-
-
     class IdFilter extends BaseFilter
     {
-    
         /**
          * @var string
          */
-        protected $name = 'id';
-    
-    
+        protected $name = 'id';  //mandatory for not global filter
+
         /**
          * @param string|object|int|bool $input
          * @param array $arguments
@@ -91,26 +77,21 @@ Attribute 'name' is necessary!
         }
     }
     
-2) Grid registration:
+####2) Grid registration:
 
-File: service.yml
-Tag: trinity.grid.filter
-    
-   
+In services.yml
+
   trinity.grid.filter.id:
       class: Trinity\Bundle\GridBundle\Filter\IdFilter
       tags:
-        - {name: "trinity.grid.filter"}
+        - {name: "trinity.grid.filter"} //tag name have to be trinity.grid.filter
     
-3) Set up filter for current grid:
+####3) Set up filter for current grid:
     
-     $this->setColumnFilter('id', 'id');
-     
-First attribute 'id' -> column name.
+     $this->setColumnFilter('columnName', 'filterName');
 
-Second attribute -> filter name.     
 
-#####Global filters
+####4) Global filters
 
 For global filter must be set attribute 'global' to TRUE;
 
@@ -128,13 +109,11 @@ Attribute 'name' is not necessary.
          */
         function process($input, array $arguments = []) : string
         {
-    
             if ((is_object($input) && method_exists($input, 'getName'))) {
                 $input = $input->getName();
             } elseif (is_object($input)) {
                 $input = (string)$input;
             }
-    
             return $input;
         }
     }
