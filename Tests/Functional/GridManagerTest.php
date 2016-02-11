@@ -43,7 +43,7 @@ class GridManagerTest extends WebTestCase
         $container = $kernel->getContainer();
         $manager = $container->get('trinity.grid.manager');
 
-        $this->assertEquals('product', $manager->getGridNameFromEntieies($this->getEntitiesArray()));
+        $this->assertEquals('product', $manager->getGridNameFromEntities($this->getEntitiesArray()));
     }
 
 

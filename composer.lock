@@ -4,70 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "211d353c9dd02119ced9a260c5287067",
-    "content-hash": "ab67b21bd165afdd4d8f35387181d25b",
+    "hash": "83b6c2c774e9e51e5ad864b242a2afb9",
+    "content-hash": "aab411fdf5db8a16de77dd8db388583b",
     "packages": [
-        {
-            "name": "apy/datagrid-bundle",
-            "version": "2.2.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/APY/APYDataGridBundle.git",
-                "reference": "08f109cd25acaec99d3b700653dd33e77012b61f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/APY/APYDataGridBundle/zipball/08f109cd25acaec99d3b700653dd33e77012b61f",
-                "reference": "08f109cd25acaec99d3b700653dd33e77012b61f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/symfony": ">=2.0.0",
-                "twig/twig": ">=1.5.0"
-            },
-            "suggest": {
-                "PHPExcel": "Export the grid (Excel, HTML or PDF)",
-                "ext-intl": "Translate the grid",
-                "ext-mbstring": "Convert your data with the right charset"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "APY\\DataGridBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stanislav Turza",
-                    "email": "stanislav.turza@gmail.com"
-                },
-                {
-                    "name": "Evan Owens",
-                    "email": "eaowens@gmail.com"
-                },
-                {
-                    "name": "Yoann Petit",
-                    "email": "abhoryo@free.fr"
-                }
-            ],
-            "description": "Symfony2 Datagrid Bundle",
-            "homepage": "https://github.com/Abhoryo/APYDataGridBundle",
-            "keywords": [
-                "datagrid",
-                "symfony"
-            ],
-            "time": "2015-05-10 10:49:52"
-        },
         {
             "name": "behat/transliterator",
             "version": "v1.1.0",
@@ -1079,12 +1018,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "6ccff96434c0ac7fee077d1dce90966341dfd278"
+                "reference": "8f1fc2273b37c61ddcc1620abf4500320a23763e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6ccff96434c0ac7fee077d1dce90966341dfd278",
-                "reference": "6ccff96434c0ac7fee077d1dce90966341dfd278",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/8f1fc2273b37c61ddcc1620abf4500320a23763e",
+                "reference": "8f1fc2273b37c61ddcc1620abf4500320a23763e",
                 "shasum": ""
             },
             "require": {
@@ -1140,59 +1079,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-01-08 10:46:39"
-        },
-        {
-            "name": "fzaninotto/faker",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5"
-            },
-            "suggest": {
-                "ext-intl": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "time": "2015-05-29 06:29:14"
+            "time": "2016-01-27 09:36:48"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2388,16 +2275,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "4d5cec62846b3d2900a0fe333ce6f2962a9279b2"
+                "reference": "3e40a4da01aad3f750be373042421fe9e0d24257"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/4d5cec62846b3d2900a0fe333ce6f2962a9279b2",
-                "reference": "4d5cec62846b3d2900a0fe333ce6f2962a9279b2",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/3e40a4da01aad3f750be373042421fe9e0d24257",
+                "reference": "3e40a4da01aad3f750be373042421fe9e0d24257",
                 "shasum": ""
             },
             "require": {
-                "apy/datagrid-bundle": "~2.2",
                 "doctrine/data-fixtures": "~1",
                 "doctrine/doctrine-bundle": "~1.6",
                 "doctrine/doctrine-fixtures-bundle": "~2",
@@ -2406,7 +2292,8 @@
                 "knplabs/doctrine-behaviors": "~1.2",
                 "php": ">=5.6",
                 "symfony/monolog-bundle": "~2.8",
-                "symfony/symfony": "~2.8 | ~3.0"
+                "symfony/symfony": "~2.8 | ~3.0",
+                "trinity/settings": "dev-master"
             },
             "require-dev": {
                 "braincrafted/testing-bundle": "@stable",
@@ -2435,7 +2322,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-01-26 18:49:51"
+            "time": "2016-01-27 08:49:38"
         },
         {
             "name": "trinity/search",
@@ -2443,25 +2330,27 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "64d566f7f297dd71615a28a2e2aa9546215bf9cf"
+                "reference": "26f60778ad44d129b03fdfd15049469d573f568f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/64d566f7f297dd71615a28a2e2aa9546215bf9cf",
-                "reference": "64d566f7f297dd71615a28a2e2aa9546215bf9cf",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/26f60778ad44d129b03fdfd15049469d573f568f",
+                "reference": "26f60778ad44d129b03fdfd15049469d573f568f",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/rest-bundle": "~1.7",
-                "fzaninotto/faker": "^1.5",
+                "friendsofsymfony/user-bundle": "master-dev",
                 "jms/serializer-bundle": "~1.1",
                 "nette/utils": "~2.3",
                 "php": ">=7",
                 "sensio/framework-extra-bundle": "~3.0",
                 "symfony/framework-bundle": "~2.8 | ~3.0",
-                "trinity/framework": "dev-master"
+                "trinity/framework": "dev-master",
+                "trinity/settings": "dev-master"
             },
             "require-dev": {
+                "fzaninotto/faker": "^1.5",
                 "mockery/mockery": "~0.9",
                 "phpunit/phpunit": "5.1.*",
                 "sensio/generator-bundle": "~3.0",
@@ -2492,7 +2381,65 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-01-26 18:53:52"
+            "time": "2016-01-27 12:08:48"
+        },
+        {
+            "name": "trinity/settings",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modpreneur/trinity-settings.git",
+                "reference": "cad0b1b40df6ac008f8d27148fa63814b8da9222"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modpreneur/trinity-settings/zipball/cad0b1b40df6ac008f8d27148fa63814b8da9222",
+                "reference": "cad0b1b40df6ac008f8d27148fa63814b8da9222",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.6",
+                "doctrine/orm": "~2.5",
+                "php": ">=7",
+                "sensio/framework-extra-bundle": "^3.0",
+                "symfony/twig-bundle": "~2.8|~3.0",
+                "twig/extensions": "~1.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.5",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "5.1.*",
+                "symfony/browser-kit": "~2.8|~3.0",
+                "symfony/form": "~3",
+                "symfony/validator": "~3",
+                "symfony/var-dumper": "~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Trinity\\Bundle\\SettingsBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trinity Team",
+                    "email": "info@modpreneur.com"
+                }
+            ],
+            "description": "Trinity Settings bundle",
+            "time": "2016-01-26 19:15:34"
         },
         {
             "name": "twig/extensions",
@@ -2699,6 +2646,58 @@
     ],
     "packages-dev": [
         {
+            "name": "fzaninotto/faker",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2015-05-29 06:29:14"
+        },
+        {
             "name": "hamcrest/hamcrest-php",
             "version": "v1.2.2",
             "source": {
@@ -2782,7 +2781,7 @@
             ],
             "authors": [
                 {
-                    "name": "Padraic Brady",
+                    "name": "Pádraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },
@@ -3748,7 +3747,8 @@
     "stability-flags": {
         "trinity/framework": 20,
         "friendsofsymfony/user-bundle": 20,
-        "trinity/search": 20
+        "trinity/search": 20,
+        "trinity/settings": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

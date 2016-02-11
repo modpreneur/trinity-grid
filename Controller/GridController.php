@@ -18,9 +18,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GridController extends Controller
 {
-
     /**
      * @Route("/{entity}/{query}", name="grid-index")
+     * @param string $entity
+     * @param string $query
+     * @return JsonResponse
+     * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
     public function gridAction($entity, $query){
         $gridManager = $this->get('trinity.grid.manager');
