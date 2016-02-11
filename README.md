@@ -118,7 +118,7 @@ Attribute 'name' is not necessary.
         }
     }
 
-###3) Parse entity array to array of strings
+###Parse entity array to array of strings
 
 From container pull service 'trinity.grid.manager'
 
