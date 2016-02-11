@@ -57,7 +57,7 @@ Filters are used to change the attribute values.
 
 ####1) Create filter:
 
-Filter -> BaseFilter or FilterInterface!
+Filter have to inherit from BaseFilter or FilterInterface!
 
     class IdFilter extends BaseFilter
     {
@@ -81,7 +81,7 @@ Filter -> BaseFilter or FilterInterface!
 
 In services.yml
 
-  trinity.grid.filter.id:
+    trinity.grid.filter.id:
       class: Trinity\Bundle\GridBundle\Filter\IdFilter
       tags:
         - {name: "trinity.grid.filter"} //tag name have to be trinity.grid.filter
