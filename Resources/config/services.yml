@@ -9,6 +9,8 @@ services:
     class: Trinity\Bundle\GridBundle\Filter\DateTimeFilter
     tags:
       - {name: "trinity.grid.filter"}
+    arguments:
+      - "@trinity.settings"
 
 
   trinity.grid.filter.id:

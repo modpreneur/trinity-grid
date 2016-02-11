@@ -6,6 +6,9 @@
 
 namespace Trinity\Bundle\GridBundle\Filter;
 
+use Trinity\Bundle\SettingsBundle\Manager\SettingsManagerInterface;
+
+
 
 /**
  * Class DateTimeFilter
@@ -21,6 +24,19 @@ class DateTimeFilter extends BaseFilter
      */
     protected $name = "dateTime";
 
+    /**
+     * @var SettingsManagerInterface
+     */
+    protected $settingsManager;
+
+    /**
+     * DateTimeFilter constructor.
+     * @param SettingsManagerInterface $settingsManager
+     */
+    function __construct(SettingsManagerInterface $settingsManager)
+    {
+        $this->settingsManager = $settingsManager;
+    }
 
     /**
      * @param \Datetime $input
@@ -34,6 +50,11 @@ class DateTimeFilter extends BaseFilter
         }
 
         if($input instanceof \DateTime){
+
+            if ( $this->settingsManager->has('datetime') ) {
+                return $input->format($this->settingsManager->get('datetime'));
+            }
+
             return $input->format(self::GLOBAL_FORMAT);
         }
 
