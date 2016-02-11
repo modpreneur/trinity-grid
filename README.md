@@ -10,7 +10,7 @@ Description:
 
 ##Documentation
 
-###1) Create Grid Twig Template
+###1) Create Grid Template
 
 Create class extended by BaseGrid. Add templates for change attributes value.
 
@@ -38,7 +38,7 @@ Available variables are:
     - row - entity object
     
     
-###2) Register Grid Twig Template
+###2) Register Grid Template
 
 File: services.yml 
   
