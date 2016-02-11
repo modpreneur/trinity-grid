@@ -35,8 +35,7 @@ For change value of cell use block cell_attributeName.
 
     {% block cell_name %} Template edit - {{ value }} {% endblock %}
     
-<b>Available variables:<b/>
-
+<b>Available variables:</b>
 - value = value of cell
 - row = entity object
     
