@@ -10,7 +10,9 @@ Description:
 
 ##Documentation
 
-###1) Create Grid Template
+###Grid Template
+
+####1) Create Grid Template
 
 Create class extended by BaseGrid. Add templates for change attributes value.
 
@@ -23,19 +25,20 @@ Create class extended by BaseGrid. Add templates for change attributes value.
     }
     
     
-####Set up
+#####Set up
     addTemplate     - add new template for changing values. 
-    setColumnFormat - for basic chage value of date or simple text edit.
+    setColumnFormat - for basic change value of date or simple text edit.
     
-Template:
+#####Template:
     
-cell_attributeName for change value. 
+For change value of cell use block cell_attributeName.
 
     {% block cell_name %} Template edit - {{ value }} {% endblock %}
     
-Available variables are: 
-    - value 
-    - row - entity object
+<b>Available variables:<b/>
+
+- value = value of cell
+- row = entity object
     
     
 ###2) Register Grid Template
