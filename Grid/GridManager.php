@@ -116,12 +116,11 @@ class GridManager
                     $value = $filter->process($value, ['column' => str_replace('.','_', $column), 'entity' => $entity, 'grid' => $grid]);
                 }
 
-                $row[$column] = $value;
+                $row[preg_replace('/\./',':', $column)] = $value;
             }
 
             $arrayResult[] = $row;
         }
-        //$this->dumpDie($arrayResult);
 
         return $arrayResult;
     }
