@@ -18,6 +18,37 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GridController extends Controller
 {
+
+    /**
+     * @Route("/elastic/{entity}/{query}", name="grid-elastic")
+     * @param string $entity
+     * @param string $query
+     * @return JsonResponse
+     * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
+     */
+    public function gridElasticAction($entity, $query){
+
+        $gridManager = $this->get('trinity.grid.manager');
+
+        $search = $this->get('trinity.search');
+
+        $nqlQuery = $search->queryTable($entity, $query);
+
+        $columns = [];
+
+        foreach($nqlQuery->getSelect()->getColumns() as $column) {
+            $columns[] = $column->getFullName();
+        }
+
+        $entities = $this->get('trinity.elastic.log.service')->getByQuery($nqlQuery);
+
+
+        $arrayOfEntities = $gridManager->convertEntitiesToArray($search, $entities, $columns);
+
+        return new JsonResponse($arrayOfEntities);
+    }
+
+
     /**
      * @Route("/{entity}/{query}", name="grid-index")
      * @param string $entity
@@ -26,6 +57,7 @@ class GridController extends Controller
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
     public function gridAction($entity, $query){
+
         $gridManager = $this->get('trinity.grid.manager');
 
         $search = $this->get('trinity.search');
@@ -42,5 +74,8 @@ class GridController extends Controller
 
         return new JsonResponse($arrayOfEntities);
     }
+
+
+
 
 }
