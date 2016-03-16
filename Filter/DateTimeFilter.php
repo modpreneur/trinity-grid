@@ -58,7 +58,12 @@ class DateTimeFilter extends BaseFilter
             return $input->format(self::GLOBAL_FORMAT);
         }
 
-        throw new \BadFunctionCallException("Argument must be instance of \\DateTime.");
+        if(ctype_digit((string)$input)){
+
+            return date(self::GLOBAL_FORMAT, $input);
+        }
+
+        throw new \BadFunctionCallException("Argument must be instance of \\DateTime or Integer (timestamp).");
     }
 
 }
