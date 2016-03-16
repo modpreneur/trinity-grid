@@ -39,7 +39,7 @@ class DateTimeFilter extends BaseFilter
     }
 
     /**
-     * @param \Datetime $input
+     * @param \Datetime|int $input
      * @param array $arguments
      * @return string
      */
