@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Class GridController
  * @package Trinity\Bundle\GridBundle\Controller
  *
- * @Route("/grid")
+ * @Route("/grid", defaults={"_format": "json"})
  */
 class GridController extends Controller
 {
