@@ -51,8 +51,8 @@ class DateTimeFilter extends BaseFilter
 
         if($input instanceof \DateTime){
 
-            if ( $this->settingsManager->has('datetime') ) {
-                return $input->format($this->settingsManager->get('datetime'));
+            if ( $this->settingsManager->has('date_time') ) {
+                return $input->format($this->settingsManager->get('date_time'));
             }
 
             return $input->format(self::GLOBAL_FORMAT);
