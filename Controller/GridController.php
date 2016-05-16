@@ -24,15 +24,18 @@ class GridController extends Controller
 
     /**
      * @Route("/elastic/{entity}/{query}", name="grid-elastic")
+     *
      * @param string $entity
      * @param string $query
+     *
      * @return JsonResponse
+     *
      * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridElasticAction($entity, $query, $query)
+    public function gridElasticAction($entity, $query)
     {
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
@@ -59,9 +62,12 @@ class GridController extends Controller
 
     /**
      * @Route("/{entity}/{query}", name="grid-index")
+     *
      * @param string $entity
      * @param string $query
+     *
      * @return JsonResponse
+     *
      * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
