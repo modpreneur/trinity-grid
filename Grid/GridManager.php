@@ -10,7 +10,6 @@ use Trinity\Bundle\GridBundle\Filter\FilterInterface;
 use Trinity\FrameworkBundle\Exception\MemberAccessException;
 use Trinity\FrameworkBundle\Utils\ObjectMixin;
 
-
 /**
  * Class GridManager
  * @package Trinity\Grid
@@ -80,43 +79,50 @@ class GridManager
      * @return array
      * @throws InvalidArgumentException
      * @throws MemberAccessException
+     *
+     * @todo MartinMatejka for what is $search
      */
     public function convertEntitiesToArray($search, $entities, $columns) : array
     {
-        if (!$this->is_iterable($entities)) {
-            throw new InvalidArgumentException('Agrument \'entities\' is not iterable.');
+        if (!$this->isIterable($entities)) {
+            throw new InvalidArgumentException('Argument \'entities\' is not iterable.');
         }
 
-        if(count($entities) > 0)
+        if (count($entities) > 0) {
             $grid = $this->getGrid(
                 $this->getGridNameFromEntities($entities)
             );
-
+        }
 
         $arrayResult = [];
 
         foreach ($entities as $entity) {
-
             $row = [];
             foreach ($columns as $column) {
-
                 $value = self::getValue($entity, $column);
 
+                // $grid is defined in condition count of entities > 0 so always in foreach entities
                 // specific filter
                 $filter = $grid->getColumnFormat($column);
                 if (!empty($filter)) {
                     $filter = $this->getFilter($filter);
-                    $value = $filter->process($value, ['column' => str_replace('.','_', $column), 'entity' => $entity, 'grid' => $grid]);
+                    $value = $filter->process(
+                        $value,
+                        ['column' => str_replace('.', '_', $column), 'entity' => $entity, 'grid' => $grid]
+                    );
                 }
 
                 /** @var FilterInterface[] $filters */
                 $filters = $this->getGlobalFilters();
 
                 foreach ($filters as $filter) {
-                    $value = $filter->process($value, ['column' => str_replace('.','_', $column), 'entity' => $entity, 'grid' => $grid]);
+                    $value = $filter->process(
+                        $value,
+                        ['column' => str_replace('.', '_', $column),'entity' => $entity, 'grid' => $grid]
+                    );
                 }
 
-                $row[preg_replace('/\./',':', $column)] = $value;
+                $row[preg_replace('/\./', ':', $column)] = $value;
             }
 
             $arrayResult[] = $row;
@@ -125,23 +131,37 @@ class GridManager
         return $arrayResult;
     }
 
-    public static function getValue($entity, $value) {
-        $values = explode(".", $value);
+
+    /**
+     * @param object $entity
+     * @param string $value
+     * @return mixed|string
+     */
+    public static function getValue($entity, $value)
+    {
+        $values = explode('.', $value);
         return self::getObject($entity, $values, 0);
     }
 
-    private static function getObject($entity, $values, $curValueIndex) {
+    /**
+     * @param object $entity
+     * @param array $values
+     * @param int $curValueIndex
+     * @return mixed|string
+     */
+    private static function getObject($entity, $values, $curValueIndex)
+    {
         try {
             $obj = ObjectMixin::get($entity, $values[$curValueIndex]);
-            if ($curValueIndex == count($values) - 1) {
+            if ($curValueIndex === count($values) - 1) {
                 return $obj;
-            } else if (is_object($obj)) {
+            } elseif (is_object($obj)) {
                 return self::getObject($obj, $values, $curValueIndex + 1);
             } else {
                 return $obj;
             }
-        } catch(\Exception $ex) {
-            return "";
+        } catch (\Exception $ex) {
+            return '';
         }
     }
 
@@ -157,13 +177,11 @@ class GridManager
         $first = reset($entities);
 
         if (!is_object($first)) {
-            throw new InvalidArgumentException("Entities must be array of entities (array of objects).");
+            throw new InvalidArgumentException('Entities must be array of entities (array of objects).');
         }
 
         $rc = new \ReflectionClass($first);
-        $name = strtolower($rc->getShortName());
-
-        return $name;
+        return strtolower($rc->getShortName());
     }
 
 
@@ -171,7 +189,7 @@ class GridManager
      * @param object|[] $var
      * @return bool
      */
-    function is_iterable($var) : bool
+    protected function isIterable($var) : bool
     {
         return (is_array($var) || $var instanceof \Traversable);
     }
@@ -197,6 +215,7 @@ class GridManager
     /**
      * @param $column
      * @return FilterInterface
+     * @throws \BadFunctionCallException
      */
     public function getFilter($column) : FilterInterface
     {
@@ -221,9 +240,9 @@ class GridManager
         );
     }
 
-    private function dumpDie($what) {
+    private function dumpDie($what)
+    {
         \Symfony\Component\VarDumper\VarDumper::dump($what);
         exit;
     }
-
 }

@@ -5,7 +5,6 @@
 
 namespace Trinity\Bundle\GridBundle\Filter;
 
-
 /**
  * Class BaseFilter
  * @package Trinity\Bundle\GridBundle\Filter
@@ -13,7 +12,7 @@ namespace Trinity\Bundle\GridBundle\Filter;
 abstract class BaseFilter implements FilterInterface
 {
     /** @var string */
-    protected $name = "";
+    protected $name = '';
 
     /** @var  bool */
     protected $global = false;

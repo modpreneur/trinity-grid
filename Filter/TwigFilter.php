@@ -7,7 +7,6 @@ namespace Trinity\Bundle\GridBundle\Filter;
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
-
 /**
  * Class TwigFilter
  * @package Trinity\Bundle\GridBundle\Filter
@@ -36,8 +35,10 @@ class TwigFilter extends BaseFilter
      * @param string|object|int|bool $input
      * @param array $arguments
      * @return string
+     * @throws \Twig_Error_Syntax
+     * @throws \Twig_Error_Loader
      */
-    function process($input, array $arguments = [])
+    public function process($input, array $arguments = [])
     {
 
         /** @var BaseGrid $grid */
@@ -50,8 +51,8 @@ class TwigFilter extends BaseFilter
         /** @var object $entity */
         $entity    = $arguments['entity'];
 
-        if(is_array($column)){
-            $column = join('_', $column);
+        if (is_array($column)) {
+            $column = implode('_', $column);
         }
 
         $templates   = [];
@@ -63,12 +64,12 @@ class TwigFilter extends BaseFilter
 
         foreach ($templates as $template) {
             if ($template->hasBlock('cell_'.$column)) {
-                $input = trim($template->renderBlock("cell_".$column, ['row' => $entity, 'entity' => $entity, 'value' => $input]));
+                $input = trim(
+                    $template->renderBlock('cell_'.$column, ['row' => $entity, 'entity' => $entity, 'value' => $input])
+                );
             }
         }
 
         return $input;
     }
-
-
 }

@@ -5,12 +5,10 @@
 
 namespace Trinity\Bundle\GridBundle;
 
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Trinity\Bundle\GridBundle\DependencyInjection\Compiler\FilterLoaderPass;
 use Trinity\Bundle\GridBundle\DependencyInjection\Compiler\GridLoaderPass;
-
 
 /**
  * Class GridBundle
@@ -19,6 +17,9 @@ use Trinity\Bundle\GridBundle\DependencyInjection\Compiler\GridLoaderPass;
 class GridBundle extends Bundle
 {
 
+    /**
+     * {@inheritDoc}
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -26,5 +27,4 @@ class GridBundle extends Bundle
         $container->addCompilerPass(new FilterLoaderPass());
 
     }
-
 }

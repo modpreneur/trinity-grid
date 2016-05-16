@@ -5,8 +5,6 @@
 
 namespace Trinity\Bundle\GridBundle\Grid;
 
-
-
 /**
  * Class BaseGrid
  * @package Trinity\Grid
@@ -19,17 +17,15 @@ abstract class BaseGrid
     /** @var  string[] */
     protected $templates;
 
-
     /** @var   string[] */
     protected $columnFormat;
-
 
     /**
      * BaseGrid constructor.
      */
     public function __construct()
     {
-        $this->layout = "GridBundle::default_grid_layout.html.twig";
+        $this->layout = 'GridBundle::default_grid_layout.html.twig';
         $this->templates = [];
         $this->format = [];
         $this->columnFormat = [];
@@ -55,7 +51,7 @@ abstract class BaseGrid
      *
      * @return void
      */
-    protected abstract function setUp();
+    abstract protected function setUp();
 
 
     /**
@@ -65,7 +61,6 @@ abstract class BaseGrid
     public function addTemplate($template): BaseGrid
     {
         $this->templates[] = $template;
-
         return $this;
     }
 
@@ -98,8 +93,9 @@ abstract class BaseGrid
      */
     public function getColumnFormat($column) : string
     {
-        if(array_key_exists($column, $this->columnFormat))
+        if (array_key_exists($column, $this->columnFormat)) {
             return $this->columnFormat[$column];
+        }
 
         return '';
     }
@@ -113,8 +109,4 @@ abstract class BaseGrid
     {
         $this->columnFormat[$column] = $format;
     }
-
-
-
-
 }

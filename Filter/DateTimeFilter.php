@@ -3,12 +3,9 @@
  * This file is part of Trinity package.
  */
 
-
 namespace Trinity\Bundle\GridBundle\Filter;
 
 use Trinity\Bundle\SettingsBundle\Manager\SettingsManagerInterface;
-
-
 
 /**
  * Class DateTimeFilter
@@ -17,12 +14,12 @@ use Trinity\Bundle\SettingsBundle\Manager\SettingsManagerInterface;
 class DateTimeFilter extends BaseFilter
 {
 
-    const GLOBAL_FORMAT = "m/d/Y H:i";
+    const GLOBAL_FORMAT = 'm/d/Y H:i';
 
     /**
      * @var string
      */
-    protected $name = "dateTime";
+    protected $name = 'dateTime';
 
     /**
      * @var SettingsManagerInterface
@@ -33,7 +30,7 @@ class DateTimeFilter extends BaseFilter
      * DateTimeFilter constructor.
      * @param SettingsManagerInterface $settingsManager
      */
-    function __construct(SettingsManagerInterface $settingsManager)
+    public function __construct(SettingsManagerInterface $settingsManager)
     {
         $this->settingsManager = $settingsManager;
     }
@@ -42,28 +39,26 @@ class DateTimeFilter extends BaseFilter
      * @param \Datetime|int $input
      * @param array $arguments
      * @return string
+     * @throws \BadFunctionCallException
      */
-    function process($input, array $arguments = []) : string
+    public function process($input, array $arguments = []) : string
     {
-        if(is_null($input)) {
-            return "";
+        if (null === $input) {
+            return '';
         }
 
-        if($input instanceof \DateTime){
-
-            if ( $this->settingsManager->has('date_time') ) {
+        if ($input instanceof \DateTime) {
+            if ($this->settingsManager->has('date_time')) {
                 return $input->format($this->settingsManager->get('date_time'));
             }
 
             return $input->format(self::GLOBAL_FORMAT);
         }
 
-        if(ctype_digit((string)$input)){
-
+        if (ctype_digit((string)$input)) {
             return date(self::GLOBAL_FORMAT, $input);
         }
 
         throw new \BadFunctionCallException("Argument must be instance of \\DateTime or Integer (timestamp).");
     }
-
 }

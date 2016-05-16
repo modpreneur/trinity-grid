@@ -5,11 +5,9 @@
 
 namespace Trinity\Bundle\GridBundle\DependencyInjection\Compiler;
 
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-
 
 /**
  * Class GridLoaderPass
@@ -20,6 +18,8 @@ class GridLoaderPass implements CompilerPassInterface
     /**
      *
      * @param ContainerBuilder $container
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
     public function process(ContainerBuilder $container)
     {
@@ -32,7 +32,7 @@ class GridLoaderPass implements CompilerPassInterface
 
 
         foreach ($taggedServices as $id => $tags) {
-            foreach($tags as $attributes){
+            foreach ($tags as $attributes) {
                 $definition->addMethodCall('addGrid', [$attributes['alias'], new Reference($id)]);
             }
         }

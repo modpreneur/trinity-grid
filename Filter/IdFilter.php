@@ -23,7 +23,7 @@ class IdFilter extends BaseFilter
      * @param array $arguments
      * @return string
      */
-    function process($input, array $arguments = []) : string
+    public function process($input, array $arguments = []) : string
     {
         return $input.'.';
     }

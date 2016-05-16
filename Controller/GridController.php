@@ -8,7 +8,10 @@ namespace Trinity\Bundle\GridBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Trinity\Bundle\GridBundle\Grid\GridManager;
+use Trinity\Bundle\SearchBundle\NQL\Column;
+use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
+use Trinity\Bundle\SearchBundle\Search;
 
 /**
  * Class GridController
@@ -24,28 +27,33 @@ class GridController extends Controller
      * @param string $entity
      * @param string $query
      * @return JsonResponse
+     * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
+     * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridElasticAction($entity, $query){
-
+    public function gridElasticAction($entity, $query, $query)
+    {
+        /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
 
+        /** @var Search $search */
         $search = $this->get('trinity.search');
 
+        /** @var NQLQuery $nqlQuery */
         $nqlQuery = $search->queryTable($entity, $query);
 
         $columns = [];
 
-        foreach($nqlQuery->getSelect()->getColumns() as $column) {
+        foreach ($nqlQuery->getSelect()->getColumns() as $column) {
             $columns[] = $column->getFullName();
         }
 
         $entities = $this->get('trinity.logger.elastic.read.log.service')->getByQuery($nqlQuery);
 
-
-        $arrayOfEntities = $gridManager->convertEntitiesToArray($search, $entities, $columns);
-
-        return new JsonResponse($arrayOfEntities);
+        return new JsonResponse(
+            $gridManager->convertEntitiesToArray($search, $entities, $columns)
+        );
     }
 
 
@@ -54,28 +62,35 @@ class GridController extends Controller
      * @param string $entity
      * @param string $query
      * @return JsonResponse
+     * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
+     * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridAction($entity, $query){
-
+    public function gridAction($entity, $query)
+    {
+        /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
 
+        /** @var Search $search */
         $search = $this->get('trinity.search');
 
+        /** @var NQLQuery $nqlQuery */
         $nqlQuery = $search->queryTable($entity, $query);
 
         $columns = [];
 
-        foreach($nqlQuery->getSelect()->getColumns() as $column) {
+        /** @var Column $column */
+        foreach ($nqlQuery->getSelect()->getColumns() as $column) {
             $columns[] = $column->getFullName();
         }
 
-        $arrayOfEntities = $gridManager->convertEntitiesToArray($search, $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(), $columns);
-
-        return new JsonResponse($arrayOfEntities);
+        return new JsonResponse(
+            $gridManager->convertEntitiesToArray(
+                $search,
+                $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(),
+                $columns
+            )
+        );
     }
-
-
-
-
 }

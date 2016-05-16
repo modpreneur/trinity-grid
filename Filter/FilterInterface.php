@@ -5,7 +5,6 @@
 
 namespace Trinity\Bundle\GridBundle\Filter;
 
-
 /**
  * Interface FilterInterface
  * @package Trinity\Bundle\GridBundle\Filter
@@ -18,25 +17,24 @@ interface FilterInterface
      * @param array $arguments
      * @return string
      */
-    function process($input, array $arguments = []) ;
+    public function process($input, array $arguments = []);
 
 
     /**
      * @param string $name
      * @return void
      */
-    function setName($name) ;
+    public function setName($name);
 
 
     /**
      * @return string
      */
-    function getName() : string;
+    public function getName() : string;
 
 
     /**
      * @return bool
      */
-    function isGlobal() :bool;
-
+    public function isGlobal() :bool;
 }
