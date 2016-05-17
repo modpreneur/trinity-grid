@@ -79,10 +79,8 @@ class GridManager
      * @return array
      * @throws InvalidArgumentException
      * @throws MemberAccessException
-     *
-     * @todo MartinMatejka for what is $search
      */
-    public function convertEntitiesToArray($search, $entities, $columns) : array
+    public function convertEntitiesToArray($entities, $columns) : array
     {
         if (!$this->isIterable($entities)) {
             throw new InvalidArgumentException('Argument \'entities\' is not iterable.');
@@ -238,11 +236,5 @@ class GridManager
                 return $v->isGlobal();
             }
         );
-    }
-
-    private function dumpDie($what)
-    {
-        \Symfony\Component\VarDumper\VarDumper::dump($what);
-        exit;
     }
 }

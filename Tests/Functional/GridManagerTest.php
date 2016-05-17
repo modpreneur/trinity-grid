@@ -56,7 +56,6 @@ class GridManagerTest extends WebTestCase
         $manager = $container->get('trinity.grid.manager');
 
         $array = $manager->convertEntitiesToArray(
-            $this->get('trinity.search'),
             $this->getEntitiesArray(),
             ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']
         );
