@@ -52,7 +52,7 @@ class GridController extends Controller
             $columns[] = $column->getFullName();
         }
 
-        $entities = $this->get('trinity.logger.elastic.read.log.service')->getByQuery($nqlQuery);
+        $entities = $this->get('trinity.logger.elastic_read_log_service')->getByQuery($nqlQuery);
 
         return new JsonResponse(
             $gridManager->convertEntitiesToArray($entities, $columns)
