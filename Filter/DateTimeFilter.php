@@ -55,7 +55,14 @@ class DateTimeFilter extends BaseFilter
             return $input->format(self::GLOBAL_FORMAT);
         }
 
+        /*
+         * Elastic have dates as timestamps
+         */
         if (ctype_digit((string)$input)) {
+            if ($this->settingsManager->has('date_time')) {
+                return date($this->settingsManager->get('date_time'), $input);
+            }
+
             return date(self::GLOBAL_FORMAT, $input);
         }
 
