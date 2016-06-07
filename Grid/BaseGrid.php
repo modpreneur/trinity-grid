@@ -25,7 +25,6 @@ abstract class BaseGrid
      */
     public function __construct()
     {
-        $this->layout = 'GridBundle::default_grid_layout.html.twig';
         $this->templates = [];
         $this->format = [];
         $this->columnFormat = [];

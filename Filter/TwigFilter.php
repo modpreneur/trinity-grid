@@ -56,7 +56,6 @@ class TwigFilter extends BaseFilter
         }
 
         $templates   = [];
-        $templates[] = $this->twig->loadTemplate($grid->getLayout());
 
         foreach ($grid->getTemplates() as $template) {
             $templates[] = $this->twig->loadTemplate($template);
