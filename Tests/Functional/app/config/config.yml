@@ -10,11 +10,11 @@ parameters:
     mailer_port: 25
     mailer_user: null
     mailer_password: null
-    locale: en
     secret: ThisTokenIsNotSoSecretChangeIt
     debug_toolbar: true
     debug_redirects: false
     use_assetic_controller: true
+    locale: en
     trinity.search.doctrine_prefix: "Grid"
     trinity.search.namespace: "Trinity\\Bundle\\GridBundle\\Tests\\Functional\\Entity"
 
@@ -24,16 +24,18 @@ doctrine:
       driver:   "%database_driver%"
       path:     "%kernel.cache_dir%/test.db"
       host:     "%database_host%"
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: false
         mappings:
-          GridBundle:
+          SearchBundle:
             type: annotation
             dir: '%kernel.root_dir%/../Entity'
             is_bundle: false
             prefix: Trinity\Bundle\GridBundle\Tests\Functional\Entity
-            alias: Grid
+            alias: Search
+
 
 framework:
     secret: "Three can keep a secret, if two of them are dead. MUHEHE."
@@ -43,14 +45,61 @@ framework:
     router: { resource: "%kernel.root_dir%/config/routing.yml" }
     templating:
             engines: ['twig']
+    form: ~
+
 
 
 # Twig Configuration
 twig:
-    debug:            true
+    debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
-grid:
+trinity_settings:
+  settings:
 
+
+trinity_logger:
+  elastic_logs:
+    elastic_host: 'necktie_elasticsearch_1'
+
+
+swiftmailer:
+    transport: "%mailer_transport%"
+    username:  "noreply"
+    host:      "%mailer_host%"
+    port:      "%mailer_port%"
+    spool:     { type: memory }
+
+
+security:
+  providers:
+      fos_userbundle:
+          id: fos_user.user_provider.username
+
+      in_memory:
+          memory:
+              users:
+                  ryan:
+                      password: ryanpass
+                      roles: 'ROLE_ADMIN'
+
+  role_hierarchy:
+      ROLE_ADMIN:       ROLE_USER
+      ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+  firewalls:
+     # disables authentication for assets and the profiler, adapt it according to your needs
+      dev:
+          pattern:  ^/(_(profiler|wdt)|css|images|js)/
+          security: false
+      default:
+          pattern: ^/
+          anonymous: ~
+
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Trinity\Bundle\GridBundle\Tests\Functional\Entity\User
 
 services:
