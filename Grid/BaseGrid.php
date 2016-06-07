@@ -11,9 +11,6 @@ namespace Trinity\Bundle\GridBundle\Grid;
  */
 abstract class BaseGrid
 {
-    /** @var  string */
-    protected $layout;
-
     /** @var  string[] */
     protected $templates;
 
@@ -64,15 +61,7 @@ abstract class BaseGrid
     }
 
 
-    /**
-     * Return twig layout
-     *
-     * @return string
-     */
-    public function getLayout() : string
-    {
-        return $this->layout;
-    }
+
 
 
     /**
