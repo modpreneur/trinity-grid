@@ -54,9 +54,17 @@ class GridController extends Controller
 
         $entities = $this->get('trinity.logger.elastic_read_log_service')->getByQuery($nqlQuery);
 
+//        return new JsonResponse(
+//            $gridManager->convertEntitiesToArray($entities, $columns)
+//        );
+
+        $result = $gridManager->convertEntitiesToArray($entities, $columns);
+
+        //Gabi-TODO: when search/query/WHERE part is done solve this
         return new JsonResponse(
-            $gridManager->convertEntitiesToArray($entities, $columns)
+            ['count' => ['result' => count($result), 'total' => count($result)], 'result' => $result]
         );
+        
     }
 
 
