@@ -67,6 +67,8 @@ class GridController extends Controller
      * @param string $query
      *
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      *
      * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
@@ -91,11 +93,15 @@ class GridController extends Controller
             $columns[] = $column->getFullName();
         }
 
+        $result = $gridManager->convertEntitiesToArray(
+            $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(),
+            $columns
+        );
+
+        $totalCount = $this->get('trinity.search.dql_converter')->count($entity)->getQuery()->getSingleScalarResult();
+
         return new JsonResponse(
-            $gridManager->convertEntitiesToArray(
-                $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(),
-                $columns
-            )
+            ['count' => ['result' => count($result), 'total' => $totalCount], 'result' => $result]
         );
     }
 }
