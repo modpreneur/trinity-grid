@@ -101,12 +101,14 @@ class GridController extends Controller
             $columns[] = $column->getFullName();
         }
 
+        $queryBuilder = $nqlQuery->getQueryBuilder(true);
+
         $result = $gridManager->convertEntitiesToArray(
-            $nqlQuery->getQueryBuilder(true)->getQuery()->getResult(),
+            $queryBuilder->getQuery()->getResult(),
             $columns
         );
 
-        $totalCount = $this->get('trinity.search.dql_converter')->count($entity)->getQuery()->getSingleScalarResult();
+        $totalCount = $this->get('trinity.search.dql_converter')->convertToCount($queryBuilder)->getQuery()->getSingleScalarResult();
 
         return new JsonResponse(
             ['count' => ['result' => count($result), 'total' => $totalCount], 'result' => $result]
