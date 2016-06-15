@@ -42,7 +42,6 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         return array(
-            new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
@@ -50,11 +49,8 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-
-            new \FOS\UserBundle\FOSUserBundle(),
             
             new \Trinity\Bundle\LoggerBundle\LoggerBundle(),
-            new \Trinity\FrameworkBundle\TrinityFrameworkBundle(),
             new \Trinity\Bundle\SearchBundle\SearchBundle(),
             new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
 

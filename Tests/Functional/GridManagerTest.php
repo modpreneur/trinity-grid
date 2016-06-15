@@ -5,7 +5,6 @@
 
 namespace Trinity\Bundle\GridBundle\Tests\Functional;
 
-use Nette\Utils\DateTime;
 use Trinity\Bundle\GridBundle\Tests\Functional\Entity\Product;
 
 
@@ -68,7 +67,7 @@ class GridManagerTest extends WebTestCase
                     'name' => 'Template edit - John Dee', // template
                     'description' => 'Description.',
                     'nonexistentColumn' => '',
-                    'createdAt' => '01/01/2010 00:00',
+                    'createdAt' => '2010-01-01 00:00:00',
                 ],
             ],
             $array
@@ -83,9 +82,9 @@ class GridManagerTest extends WebTestCase
         $productA->setName("John Dee");
         $productA->setDescription("Description.");
         $productA->setCreatedAt(
-            DateTime::from("2010-1-1")
+            new \DateTime("2010-1-1")
         );
-        $productA->setUpdatedAt(DateTime::from("2010-1-1"));
+        $productA->setUpdatedAt(new \DateTime("2010-1-1"));
 
         return [
             $productA,

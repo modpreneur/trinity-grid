@@ -56,7 +56,11 @@ twig:
     strict_variables: "%kernel.debug%"
 
 trinity_settings:
-  settings:
+    settings:
+        date: 'Y-m-d'
+        time: 'H:i:s'
+        date_time: 'Y-m-d H:i:s'
+
 
 
 trinity_logger:
@@ -64,19 +68,8 @@ trinity_logger:
     elastic_host: 'necktie_elasticsearch_1'
 
 
-swiftmailer:
-    transport: "%mailer_transport%"
-    username:  "noreply"
-    host:      "%mailer_host%"
-    port:      "%mailer_port%"
-    spool:     { type: memory }
-
-
 security:
   providers:
-      fos_userbundle:
-          id: fos_user.user_provider.username
-
       in_memory:
           memory:
               users:
@@ -96,11 +89,5 @@ security:
       default:
           pattern: ^/
           anonymous: ~
-
-
-fos_user:
-    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
-    user_class: Trinity\Bundle\GridBundle\Tests\Functional\Entity\User
 
 services:
