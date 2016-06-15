@@ -21,7 +21,8 @@
     "sensio/framework-extra-bundle": "~3.0",
     "trinity/settings": "dev-master",
     "trinity/logger" : "dev-master",
-    "trinity/search": "dev-master"
+    "trinity/search": "dev-master",
+    "trinity/utils": "dev-master"
   },
 
   "require-dev": {

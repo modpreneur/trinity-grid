@@ -17,6 +17,7 @@ parameters:
     locale: en
     trinity.search.doctrine_prefix: "Grid"
     trinity.search.namespace: "Trinity\\Bundle\\GridBundle\\Tests\\Functional\\Entity"
+    trinity.search.detail_url_provider: "trinity.search.detail_url_provider"
 
 # Doctrine Configuration
 doctrine:
@@ -34,7 +35,7 @@ doctrine:
             dir: '%kernel.root_dir%/../Entity'
             is_bundle: false
             prefix: Trinity\Bundle\GridBundle\Tests\Functional\Entity
-            alias: Search
+            alias: Grid
 
 
 framework:
