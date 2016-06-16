@@ -8,7 +8,7 @@
 
 namespace Trinity\Bundle\GridBundle\Grid;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Trinity\Bundle\GridBundle\Exception\DuplicateColumnException;
 
 /**
  * Class GridConfigurationBuilder
@@ -64,7 +64,7 @@ class GridConfigurationBuilder
      * @param string $label
      * @param array $properties
      *
-     * @throws \Symfony\Component\Config\Definition\Exception\Exception
+     * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
     public function addColumn(string $name, string $label = '', array $properties = [])
     {
@@ -81,7 +81,7 @@ class GridConfigurationBuilder
 
             $this->configuration['columns'][] = $properties;
         } else {
-            throw new Exception("Column with name \"{$name}\" already exists!");
+            throw new DuplicateColumnException("Column with name \"{$name}\" already exists!");
         }
     }
 
