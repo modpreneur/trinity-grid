@@ -7,8 +7,8 @@ namespace Trinity\Bundle\GridBundle\Grid;
 
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
 use Trinity\Bundle\GridBundle\Filter\FilterInterface;
-use Trinity\Bundle\UtilsBundle\Exception\MemberAccessException;
-use Trinity\Bundle\UtilsBundle\Utils\ObjectMixin;
+use Trinity\Component\Utils\Exception\MemberAccessException;
+use Trinity\Component\Utils\Utils\ObjectMixin;
 
 /**
  * Class GridManager

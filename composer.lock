@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "94831498c6b4bdb80891ebdcd416c0f4",
-    "content-hash": "f035efcc5c833bfbd18d40694fba6cfc",
+    "hash": "668a7fce1ac568fac6d42b14fc5f4a12",
+    "content-hash": "37278cc3f8febae619d58348bf3622f5",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1220,6 +1220,76 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "jms-serializer/serializer-bundle",
+            "version": "1.1.0",
+            "target-dir": "JMS/SerializerBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jms-serializer/JMSSerializerBundle.git",
+                "reference": "3e396c980545350c2efb65a50041d2a9f9d6562e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jms-serializer/JMSSerializerBundle/zipball/3e396c980545350c2efb65a50041d2a9f9d6562e",
+                "reference": "3e396c980545350c2efb65a50041d2a9f9d6562e",
+                "shasum": ""
+            },
+            "require": {
+                "jms/serializer": "^1.0.0",
+                "php": ">=5.4.0",
+                "phpoption/phpoption": "^1.1.0",
+                "symfony/framework-bundle": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/orm": "*",
+                "symfony/browser-kit": "*",
+                "symfony/class-loader": "*",
+                "symfony/css-selector": "*",
+                "symfony/finder": "*",
+                "symfony/form": "*",
+                "symfony/process": "*",
+                "symfony/stopwatch": "*",
+                "symfony/twig-bundle": "*",
+                "symfony/validator": "*",
+                "symfony/yaml": "*"
+            },
+            "suggest": {
+                "jms/di-extra-bundle": "Required to get lazy loading (de)serialization visitors, ~1.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "JMS\\SerializerBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Allows you to easily serialize, and deserialize data of any complexity",
+            "homepage": "http://jmsyst.com/bundles/JMSSerializerBundle",
+            "keywords": [
+                "deserialization",
+                "jaxb",
+                "json",
+                "serialization",
+                "xml"
+            ],
+            "time": "2015-11-10 12:26:42"
+        },
+        {
             "name": "jms/metadata",
             "version": "1.5.1",
             "source": {
@@ -2278,12 +2348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-logger.git",
-                "reference": "a4064ddf6d69f9a00a2a44d904c7103272ae76f7"
+                "reference": "474c7bb0d7e8756e4f6e6412dd2cc3c81d66e189"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/a4064ddf6d69f9a00a2a44d904c7103272ae76f7",
-                "reference": "a4064ddf6d69f9a00a2a44d904c7103272ae76f7",
+                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/474c7bb0d7e8756e4f6e6412dd2cc3c81d66e189",
+                "reference": "474c7bb0d7e8756e4f6e6412dd2cc3c81d66e189",
                 "shasum": ""
             },
             "require": {
@@ -2324,7 +2394,7 @@
                 }
             ],
             "description": "Trinity Logger bundle",
-            "time": "2016-06-15 10:15:10"
+            "time": "2016-06-16 11:23:40"
         },
         {
             "name": "trinity/search",
@@ -2332,34 +2402,44 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "0855d301cc5f73ac3172841060383601c615d217"
+                "reference": "bbe822224e57b1bd5943554aa025d35ded50616f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/0855d301cc5f73ac3172841060383601c615d217",
-                "reference": "0855d301cc5f73ac3172841060383601c615d217",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/bbe822224e57b1bd5943554aa025d35ded50616f",
+                "reference": "bbe822224e57b1bd5943554aa025d35ded50616f",
                 "shasum": ""
             },
             "require": {
-                "doctrine/doctrine-bundle": "~1",
+                "doctrine/data-fixtures": "~1.1",
                 "doctrine/orm": "~2.5",
                 "friendsofsymfony/rest-bundle": "~1.7",
-                "jms/serializer-bundle": "~1.1",
-                "knplabs/doctrine-behaviors": "~1",
+                "jms-serializer/serializer-bundle": "~1.1",
                 "php": ">=7",
                 "sensio/framework-extra-bundle": "~3.0",
-                "symfony/framework-bundle": "~2.8 | ~3.0",
-                "symfony/symfony": "~3.0",
+                "symfony/config": "~2.8 | ~3.0",
+                "symfony/dependency-injection": "~2.8 | ~3.0",
+                "symfony/http-kernel": "~2.8 | ~3.0",
+                "symfony/property-access": "~2.8 | ~3.0",
+                "symfony/property-info": "~2.8 | ~3.0",
+                "symfony/routing": "~2.8 | ~3.0",
+                "symfony/serializer": "~2.8 | ~3.0",
+                "symfony/validator": "~2.8 | ~3.0",
                 "trinity/utils": "dev-master"
             },
             "require-dev": {
-                "doctrine/doctrine-fixtures-bundle": "~2",
-                "fzaninotto/faker": "^1.5",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "5.1.*",
-                "satooshi/php-coveralls": "1.0.*",
-                "sensio/generator-bundle": "~3.0",
-                "symfony/var-dumper": "~3.0"
+                "doctrine/doctrine-bundle": "~1.6",
+                "fzaninotto/faker": "~1.5",
+                "knplabs/doctrine-behaviors": "~1.3",
+                "phpunit/phpunit": "~5.0",
+                "satooshi/php-coveralls": "~1.0",
+                "symfony/browser-kit": "~2.8 | ~3.0",
+                "symfony/console": "~2.8 | ~3.0",
+                "symfony/debug": "~2.8 | ~3.0",
+                "symfony/form": "~2.8 | ~3.0",
+                "symfony/security-bundle": "~2.8 | ~3.0",
+                "symfony/twig-bundle": "~2.8 | ~3.0",
+                "symfony/var-dumper": "~2.8 | ~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2386,7 +2466,7 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-06-15 12:00:16"
+            "time": "2016-06-16 18:45:05"
         },
         {
             "name": "trinity/settings",
@@ -2456,21 +2536,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-utils.git",
-                "reference": "f55c80e40f10aae92df4d894e806784a585d6b93"
+                "reference": "eda3922312188284cb350caa02e6a14ceb65bbf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/f55c80e40f10aae92df4d894e806784a585d6b93",
-                "reference": "f55c80e40f10aae92df4d894e806784a585d6b93",
+                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/eda3922312188284cb350caa02e6a14ceb65bbf0",
+                "reference": "eda3922312188284cb350caa02e6a14ceb65bbf0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7",
-                "symfony/framework-bundle": "~2.8 | ~3"
+                "php": ">=7"
             },
             "require-dev": {
-                "phpunit/phpunit": "5.*",
-                "satooshi/php-coveralls": "1.0.*"
+                "doctrine/annotations": "~1.2",
+                "phpunit/phpunit": "~5.0",
+                "satooshi/php-coveralls": "~1.0",
+                "symfony/http-kernel": "~2.8|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2480,7 +2561,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Trinity\\Bundle\\UtilsBundle\\": ""
+                    "Trinity\\Component\\Utils\\": ""
                 },
                 "exclude-from-classmap": [
                     "/Tests/"
@@ -2497,7 +2578,7 @@
                 }
             ],
             "description": "Trinity Utils bundle",
-            "time": "2016-06-13 13:52:11"
+            "time": "2016-06-16 18:43:11"
         },
         {
             "name": "twig/extensions",
@@ -3361,16 +3442,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.4.5",
+            "version": "5.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "744a50838ef373be00fb658ce9544905cf587c17"
+                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/744a50838ef373be00fb658ce9544905cf587c17",
-                "reference": "744a50838ef373be00fb658ce9544905cf587c17",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
+                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
                 "shasum": ""
             },
             "require": {
@@ -3435,7 +3516,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-06-15 07:20:05"
+            "time": "2016-06-16 06:01:15"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3709,16 +3790,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e"
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/7ae5513327cb536431847bcc0c10edba2701064e",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/42c4c2eec485ee3e159ec9884f95b431287edde4",
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
                 "shasum": ""
             },
             "require": {
@@ -3726,12 +3807,13 @@
                 "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
+                "ext-mbstring": "*",
                 "phpunit/phpunit": "~4.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -3771,7 +3853,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-06-21 07:55:53"
+            "time": "2016-06-17 09:04:28"
         },
         {
             "name": "sebastian/global-state",
