@@ -27,6 +27,6 @@ services:
           - {name: "trinity.grid.filter"}
 
   trinity.grid.grid_configuration_service:
-      class: Trinity\Bundle\GridBundle\Service
+      class: Trinity\Bundle\GridBundle\Service\GridConfigurationService
       arguments:
           - "@trinity.settings"
