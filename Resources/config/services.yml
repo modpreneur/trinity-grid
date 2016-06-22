@@ -26,7 +26,7 @@ services:
       tags:
           - {name: "trinity.grid.filter"}
 
-  necktie.grid_configuration_service:
+  trinity.grid.grid_configuration_service:
       class: Trinity\Bundle\GridBundle\Service
       arguments:
           - "@trinity.settings"
