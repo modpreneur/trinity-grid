@@ -4,6 +4,7 @@
  */
 
 namespace Trinity\Bundle\GridBundle\Grid;
+use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
 
 /**
  * Class BaseGrid
@@ -96,5 +97,14 @@ abstract class BaseGrid
     public function setColumnFilter($column, $format)
     {
         $this->columnFormat[$column] = $format;
+    }
+
+
+    /**
+     * @param NQLQuery $query
+     */
+    public function prepareQuery(NQLQuery $query)
+    {
+        
     }
 }

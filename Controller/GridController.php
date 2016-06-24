@@ -30,7 +30,7 @@ class GridController extends Controller
      *
      * @return JsonResponse
      *
-     * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
+     * @throws \Trinity\Component\Utils\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
@@ -78,7 +78,7 @@ class GridController extends Controller
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      *
-     * @throws \Trinity\FrameworkBundle\Exception\MemberAccessException
+     * @throws \Trinity\Component\Utils\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
@@ -90,9 +90,11 @@ class GridController extends Controller
 
         /** @var Search $search */
         $search = $this->get('trinity.search');
-
+        
         /** @var NQLQuery $nqlQuery */
         $nqlQuery = $search->queryTable($entity, $query);
+
+        $gridManager->getGrid($entity)->prepareQuery($nqlQuery);
 
         $columns = [];
 

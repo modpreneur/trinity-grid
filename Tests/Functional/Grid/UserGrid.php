@@ -6,6 +6,7 @@
 namespace Trinity\Bundle\GridBundle\Tests\Functional\Grid;
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
+use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
 
 
 /**
@@ -20,4 +21,12 @@ class UserGrid extends BaseGrid
         $this->addTemplate("UserGrid.html.twig");
     }
 
+    /**
+     * @param NQLQuery $query
+     */
+    public function prepareQuery(NQLQuery $query) 
+    {
+        $query->getWhere()->replaceColumn('fullName', ['firstName', 'lastName']);
+        $query->getOrderBy()->replaceColumn('fullName', ['firstName', 'lastName']);
+    }
 }
