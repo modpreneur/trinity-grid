@@ -43,7 +43,7 @@ class GridManager
      */
     public function addGrid($alias, $grid) : GridManager
     {
-        $this->grids[$alias] = $grid;
+        $this->grids[strtolower($alias)] = $grid;
 
         return $this;
     }
@@ -64,6 +64,8 @@ class GridManager
      */
     public function getGrid($name) : BaseGrid
     {
+        $name = strtolower($name);
+
         if (array_key_exists($name, $this->grids)) {
             return $this->grids[$name];
         }
@@ -116,7 +118,7 @@ class GridManager
                 foreach ($filters as $filter) {
                     $value = $filter->process(
                         $value,
-                        ['column' => str_replace('.', '_', $column),'entity' => $entity, 'grid' => $grid]
+                        ['column' => str_replace('.', '_', $column), 'entity' => $entity, 'grid' => $grid]
                     );
                 }
 
