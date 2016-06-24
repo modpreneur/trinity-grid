@@ -58,8 +58,7 @@ class GridManagerTest extends WebTestCase
             $this->getEntitiesArray(),
             ['id', 'name', 'description', 'nonexistentColumn', 'createdAt']
         );
-
-
+        
         $this->assertEquals(
             [
                 [

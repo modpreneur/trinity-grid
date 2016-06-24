@@ -17,7 +17,7 @@ class ProductGrid extends BaseGrid
 
     protected function setUp()
     {
-        $this->addTemplate("ProductGrid.html.twig");
+        $this->addTemplate("productGrid.html.twig");
     }
 
 }

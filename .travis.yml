@@ -1,10 +1,13 @@
 language: php
 php:
-  - '7.0'
-  
-before_script: 
-  - phpenv config-add travis.ini
-  - if [[ $TRAVIS_PHP_VERSION = 7.* ]] ; then pecl config-set preferred_state beta; echo yes | pecl install apcu; fi;
-  - composer install
-
+- '7.0'
+before_script:
+- phpenv config-add travis.ini
+- if [[ $TRAVIS_PHP_VERSION = 7.* ]] ; then pecl config-set preferred_state beta;
+  echo yes | pecl install apcu; fi;
+- composer install
 script: phpunit
+notifications:
+  hipchat:
+    rooms:
+      secure: VRdR+sUf+CmoIIMaMq+phOfaOBrEllvbIMH8fZfGxA1U1rX/L4+wUh7bI9soWojKDUNRGImQX/JW15fxdmy4vZ/2wPjOb6aWBxjrkRIIHFnbFuTa4DnJxmypRUaFlzfhmJgcXSH/eIq4ar6oZI3/2cFQsvS1mju/h8SdXPV/R4PaLallkIKAC6bcvzcFt/j2FA+S6FklKllYqUqM6D5VQpO0j8hLNr+XoV+Uhxta+cU4P2XQjDezhM4NpVLT+UIgR9NQs/pEpdIAoCWQt7Z4ZKYRcP5Y9clWgMNtLHh80YPjx+6PwuQomMerb/F8DvW0UEMhLzIVunipDH7OstnESNYBQhLFZxht8Ky58UC896XbghMzRrAxwxjELgH4O5P+xw3ix+iYNHMYcf9hb3N+EtP2UByjXkWShHguoVaarH1CeCNppGVfUSCVJ1y1lKEn0zxw3/sJ/M7z8McRJ4RIHd2aDnSnGBvnp6EwI6d9mJhpBarWAzpqPF5x5THdHL/655EdLqUvMXeiG3AB81zOj877D3EWjeF07cscTw/sK9OvIx2fUhCNiOAdi+C4u1As2R+nVIcHLxNvyvqr18Voc4gXsZ85peVkZKhu19lUvx1QQ+Aje4UMkRMVi2QgUjNFYsJ56Dh8uibTp+CK4yZZlWCwudtUV01hGjG+QjP44Pk=
