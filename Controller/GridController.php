@@ -81,6 +81,7 @@ class GridController extends FOSRestController
      * @param ParamFetcher $paramFetcher
      * @param string $entity
      * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Component\Utils\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
@@ -96,9 +97,14 @@ class GridController extends FOSRestController
 
         /** @var Search $search */
         $search = $this->get('trinity.search');
-        
-        /** @var NQLQuery $nqlQuery */
-        $nqlQuery = $search->queryTable($entity, $query);
+
+        if ($paramFetcher->get('c') === null) {
+            /** @var NQLQuery $nqlQuery */
+            $nqlQuery = $search->queryTable($entity, $query);
+        } else {
+            /** @var NQLQuery $nqlQuery */
+            $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query);
+        }
 
         $gridManager->getGrid($entity)->prepareQuery($nqlQuery);
 
