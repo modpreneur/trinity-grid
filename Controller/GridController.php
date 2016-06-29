@@ -5,9 +5,13 @@
 
 namespace Trinity\Bundle\GridBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Trinity\Bundle\GridBundle\Grid\GridManager;
 use Trinity\Bundle\SearchBundle\NQL\Column;
 use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
@@ -19,7 +23,7 @@ use Trinity\Bundle\SearchBundle\Search;
  *
  * @Route("/grid", defaults={"_format": "json"})
  */
-class GridController extends Controller
+class GridController extends FOSRestController
 {
 
     /**
@@ -69,22 +73,24 @@ class GridController extends Controller
 
 
     /**
-     * @Route("/{entity}/{query}", name="grid-index")
+     * @Route("/{entity}/", name="grid-index")
      *
+     * @QueryParam(name="c", nullable=true, strict=true, description="Columns", allowBlank=false)
+     * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
+     *
+     * @param ParamFetcher $paramFetcher
      * @param string $entity
-     * @param string $query
-     *
      * @return JsonResponse
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
-     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Component\Utils\Exception\MemberAccessException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridAction($entity, $query)
+    public function gridAction(ParamFetcher $paramFetcher, $entity)
     {
+        $query = $paramFetcher->get('q');
+        $queryColumns = $paramFetcher->get('c');
+
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
 

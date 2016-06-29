@@ -55,6 +55,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
+fos_rest:
+    param_fetcher_listener: true
+
 trinity_settings:
     settings:
         date: 'Y-m-d'

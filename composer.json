@@ -19,6 +19,7 @@
     "trinity/logger" : "dev-master",
     "trinity/search": "dev-master",
     "trinity/utils": "dev-master",
+    "friendsofsymfony/rest-bundle": "~1.7",
     "doctrine/doctrine-fixtures-bundle": "~2.3",
     "knplabs/doctrine-behaviors": "~1.3",
     "symfony/security-bundle": "~3",

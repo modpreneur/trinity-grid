@@ -1,6 +1,6 @@
 grid_default:
-    path:      /grid/{entity}/{query}
-    defaults:  { _controller: GridBundle:Grid:grid, query: "" }
+    path:      /grid/{entity}/
+    defaults:  { _controller: GridBundle:Grid:grid }
 
 grid_elastic:
     path:      /grid/elastic/{entity}/{query}
