@@ -27,7 +27,7 @@ class GridController extends FOSRestController
 {
 
     /**
-     * @Route("/elastic/{entity}/", name="grid-elastic")
+     * @Route("/elastic/{entity}", name="grid-elastic")
      *
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
      *
@@ -77,7 +77,7 @@ class GridController extends FOSRestController
 
 
     /**
-     * @Route("/{entity}/", name="grid-index")
+     * @Route("/{entity}", name="grid-index")
      *
      * @QueryParam(name="c", nullable=true, strict=true, description="Columns", allowBlank=false)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
