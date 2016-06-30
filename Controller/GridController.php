@@ -27,10 +27,12 @@ class GridController extends FOSRestController
 {
 
     /**
-     * @Route("/elastic/{entity}/{query}", name="grid-elastic")
+     * @Route("/elastic/{entity}/", name="grid-elastic")
+     *
+     * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
      *
      * @param string $entity
-     * @param string $query
+     * @param ParamFetcher $paramFetcher
      *
      * @return JsonResponse
      *
@@ -39,8 +41,10 @@ class GridController extends FOSRestController
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridElasticAction($entity, $query)
+    public function gridElasticAction(ParamFetcher $paramFetcher, $entity)
     {
+        $query = $paramFetcher->get('q');
+
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
 
@@ -68,7 +72,7 @@ class GridController extends FOSRestController
         return new JsonResponse(
             ['count' => ['result' => count($result), 'total' => count($result)], 'result' => $result]
         );
-        
+
     }
 
 
@@ -77,10 +81,14 @@ class GridController extends FOSRestController
      *
      * @QueryParam(name="c", nullable=true, strict=true, description="Columns", allowBlank=false)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
+     * @QueryParam(name="offset", nullable=true, strict=true, description="Offset", allowBlank=false)
+     * @QueryParam(name="limit", nullable=true, strict=true, description="Limit", allowBlank=false)
      *
      * @param ParamFetcher $paramFetcher
      * @param string $entity
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Component\Utils\Exception\MemberAccessException
@@ -91,6 +99,8 @@ class GridController extends FOSRestController
     {
         $query = $paramFetcher->get('q');
         $queryColumns = $paramFetcher->get('c');
+        $offset = $paramFetcher->get('offset');
+        $limit = $paramFetcher->get('limit');
 
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
@@ -103,7 +113,7 @@ class GridController extends FOSRestController
             $nqlQuery = $search->queryTable($entity, $query);
         } else {
             /** @var NQLQuery $nqlQuery */
-            $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query);
+            $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query, $limit, $offset);
         }
 
         $gridManager->getGrid($entity)->prepareQuery($nqlQuery);
