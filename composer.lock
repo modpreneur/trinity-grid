@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "07ec72ad5477021ec83c90787f5f8f88",
-    "content-hash": "bf0e0b42f041f44f1934e2051e4e5fda",
+    "hash": "6d6f11ee31c0fe7c3d98084621ebd95e",
+    "content-hash": "abf60aa44011fa84f4ebffdcf35036f0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2350,12 +2350,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-logger.git",
-                "reference": "bd93db93704bfcfc5767fcabae26f49df5ef3bd7"
+                "reference": "a928937b1dc246e889ad65cec0434e05b0c62bc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/bd93db93704bfcfc5767fcabae26f49df5ef3bd7",
-                "reference": "bd93db93704bfcfc5767fcabae26f49df5ef3bd7",
+                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/a928937b1dc246e889ad65cec0434e05b0c62bc7",
+                "reference": "a928937b1dc246e889ad65cec0434e05b0c62bc7",
                 "shasum": ""
             },
             "require": {
@@ -2366,7 +2366,7 @@
                 "symfony/dependency-injection": "~2.8|~3.0",
                 "symfony/http-kernel": "~2.8|~3.0",
                 "trinity/search": "dev-master",
-                "trinity/settings": "dev-master"
+                "trinity/settings": "~1.1"
             },
             "require-dev": {
                 "symfony/var-dumper": "~3.0"
@@ -2396,7 +2396,7 @@
                 }
             ],
             "description": "Trinity Logger bundle",
-            "time": "2016-06-27 12:03:46"
+            "time": "2016-06-30 09:12:46"
         },
         {
             "name": "trinity/search",
@@ -2404,12 +2404,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "56c8ee1f966797baf3a99e3c8609c4319f340e1b"
+                "reference": "838b4f3525e8240b80447441b69dec8c7f51adeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/56c8ee1f966797baf3a99e3c8609c4319f340e1b",
-                "reference": "56c8ee1f966797baf3a99e3c8609c4319f340e1b",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/838b4f3525e8240b80447441b69dec8c7f51adeb",
+                "reference": "838b4f3525e8240b80447441b69dec8c7f51adeb",
                 "shasum": ""
             },
             "require": {
@@ -2468,11 +2468,11 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-06-30 08:41:19"
+            "time": "2016-06-30 10:04:57"
         },
         {
             "name": "trinity/settings",
-            "version": "dev-master",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-settings.git",
@@ -4149,7 +4149,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "trinity/settings": 20,
         "trinity/logger": 20,
         "trinity/search": 20,
         "trinity/utils": 20

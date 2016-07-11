@@ -83,6 +83,7 @@ class GridController extends FOSRestController
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
      * @QueryParam(name="offset", nullable=true, strict=true, description="Offset", allowBlank=false)
      * @QueryParam(name="limit", nullable=true, strict=true, description="Limit", allowBlank=false)
+     * @QueryParam(name="orderBy", nullable=true, strict=true, description="Order by", allowBlank=false)
      *
      * @param ParamFetcher $paramFetcher
      * @param string $entity
@@ -101,6 +102,7 @@ class GridController extends FOSRestController
         $queryColumns = $paramFetcher->get('c');
         $offset = $paramFetcher->get('offset');
         $limit = $paramFetcher->get('limit');
+        $orderBy = $paramFetcher->get('orderBy');
 
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
@@ -108,12 +110,12 @@ class GridController extends FOSRestController
         /** @var Search $search */
         $search = $this->get('trinity.search');
 
-        if ($paramFetcher->get('c') === null) {
+        if ($queryColumns === null) {
             /** @var NQLQuery $nqlQuery */
             $nqlQuery = $search->queryTable($entity, $query);
         } else {
             /** @var NQLQuery $nqlQuery */
-            $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query, $limit, $offset);
+            $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query, $limit, $offset, $orderBy);
         }
 
         $gridManager->getGrid($entity)->prepareQuery($nqlQuery);
