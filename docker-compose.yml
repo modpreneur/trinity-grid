@@ -1,0 +1,4 @@
+tests:
+  build: .
+  volumes:
+    - .:/var/app
