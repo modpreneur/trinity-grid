@@ -4333,12 +4333,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "6196ec53dff14a7eb00d447b9e0d5bfe44bc2e7e"
+                "reference": "1d01777709ac5a31d1a943c0392b2a359129056a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/6196ec53dff14a7eb00d447b9e0d5bfe44bc2e7e",
-                "reference": "6196ec53dff14a7eb00d447b9e0d5bfe44bc2e7e",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/1d01777709ac5a31d1a943c0392b2a359129056a",
+                "reference": "1d01777709ac5a31d1a943c0392b2a359129056a",
                 "shasum": ""
             },
             "require": {
@@ -4397,7 +4397,7 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-07-13 15:18:21"
+            "time": "2016-07-18 09:20:18"
         },
         {
             "name": "trinity/settings",

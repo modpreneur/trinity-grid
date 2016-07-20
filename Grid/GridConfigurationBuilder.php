@@ -42,9 +42,9 @@ class GridConfigurationBuilder
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
-    public function setProperty(string $name, string $value)
+    public function setProperty(string $name, $value)
     {
         $this->configuration[$name] = $value;
     }
