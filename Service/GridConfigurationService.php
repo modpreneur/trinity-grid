@@ -35,6 +35,7 @@ class GridConfigurationService
      * @param int $maxEntities
      * @param int|null $limit
      * @param bool $editable
+     * @param string $order
      * @return GridConfigurationBuilder
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      */
@@ -42,11 +43,12 @@ class GridConfigurationService
         string $url,
         int $maxEntities = 1,
         int $limit = null,
-        bool $editable = false
+        bool $editable = false,
+        string $order = 'id:ASC'
     ) {
         if (!$limit) {
             $limit = $this->settingManager->get('items_on_page');
         }
-        return new GridConfigurationBuilder($url, $maxEntities, $limit, $editable);
+        return new GridConfigurationBuilder($url, $maxEntities, $limit, $editable, $order);
     }
 }
