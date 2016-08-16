@@ -77,12 +77,13 @@ class GridManager
     /**
      * @param array|\Iterator $entities
      * @param array $columns
+     * @param string $gridName
      *
      * @return array
      * @throws InvalidArgumentException
      * @throws MemberAccessException
      */
-    public function convertEntitiesToArray($entities, $columns) : array
+    public function convertEntitiesToArray($entities, $columns, $gridName = null) : array
     {
         if (!$this->isIterable($entities)) {
             throw new InvalidArgumentException('Argument \'entities\' is not iterable.');
@@ -90,7 +91,7 @@ class GridManager
 
         if (count($entities) > 0) {
             $grid = $this->getGrid(
-                $this->getGridNameFromEntities($entities)
+                $gridName ?? $this->getGridNameFromEntities($entities)
             );
         }
 

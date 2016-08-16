@@ -30,21 +30,28 @@ class GridConfigurationBuilder
      * @param int $maxEntities
      * @param int $limit
      * @param bool $editable
+     * @param string $order
      */
-    public function __construct(string $url, int $maxEntities = 1, int $limit = 15, bool $editable = false)
-    {
+    public function __construct(
+        string $url,
+        int $maxEntities = 1,
+        int $limit = 15,
+        bool $editable = false,
+        string $order = 'id:ASC'
+    ) {
         $this->configuration['url'] = $url;
         $this->configuration['max'] = $maxEntities;
         $this->configuration['limit'] = $limit;
         $this->configuration['columns'] = [];
         $this->configuration['editable'] = $editable;
+        $this->configuration['defaultOrder'] = $order;
     }
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
-    public function setProperty(string $name, string $value)
+    public function setProperty(string $name, $value)
     {
         $this->configuration[$name] = $value;
     }

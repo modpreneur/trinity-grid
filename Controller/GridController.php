@@ -140,7 +140,8 @@ class GridController extends FOSRestController
 
         $result = $gridManager->convertEntitiesToArray(
             $queryBuilder->getQuery()->getResult(),
-            $columns
+            $columns,
+            $entity
         );
 
         $totalCount = $this->get('trinity.search.dql_converter')
