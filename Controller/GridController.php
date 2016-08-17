@@ -28,11 +28,11 @@ class GridController extends FOSRestController
     /**
      * @Route("/elastic/{entity}", name="grid-elastic")
      *
-     * @QueryParam(name="c", nullable=true, strict=true, description="Columns", allowBlank=false)
-     * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=true)
-     * @QueryParam(name="offset", nullable=true, strict=true, description="Offset", allowBlank=false)
-     * @QueryParam(name="limit", nullable=true, strict=true, description="Limit", allowBlank=false)
-     * @QueryParam(name="orderBy", nullable=true, strict=true, description="Order by", allowBlank=false)
+     * @QueryParam(name="c", nullable=true, strict=false, description="Columns", allowBlank=true)
+     * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=false)
+     * @QueryParam(name="offset", nullable=true, strict=false, description="Offset", allowBlank=true)
+     * @QueryParam(name="limit", nullable=true, strict=false, description="Limit", allowBlank=true)
+     * @QueryParam(name="orderBy", nullable=true, strict=false, description="Order by", allowBlank=true)
      *
      * @param string $entity
      * @param ParamFetcher $paramFetcher
