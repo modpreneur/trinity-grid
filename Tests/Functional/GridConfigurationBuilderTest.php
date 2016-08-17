@@ -31,7 +31,8 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
             'max' => $this->T_MAX,
             'columns'=> array(),
             'editable'=>false,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
         );
 
         $builder = new GridConfigurationBuilder($this->T_URL, $this->T_MAX);
@@ -81,7 +82,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'editable'=>true,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
 
         $this->assertEquals($expected, $builder->getConfiguration(), 'Configuration is different!');
@@ -110,7 +113,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'editable'=>false,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
         $this->assertEquals($expected, $builder->getConfiguration(), 'Configuration is different!');
     }
@@ -183,7 +188,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'editable'=>false,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
 
         $this->assertEquals($expected, $builder->getConfiguration(), 'Configuration is different!');
@@ -233,7 +240,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'editable'=>false,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
         $result = $builder->getJSON();
         $expectedStr = json_encode($expected);
@@ -287,7 +296,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
             ),
             'editable'=>false,
             'filter'=>'id=2',
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
         $this->assertEquals($expected, $builder->getConfiguration(), 'Configuration is different!');
     }
@@ -337,7 +348,9 @@ class GridConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'editable'=>false,
-            'limit' => 15
+            'limit' => 15,
+            'defaultOrder' => 'id:ASC'
+
         );
 
         $this->assertEquals($expected, $builder->getConfiguration(), 'Configuration is different!');
