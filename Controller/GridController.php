@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Trinity\Bundle\GridBundle\Event\ConfigurationEvent;
 use Trinity\Bundle\GridBundle\Grid\GridManager;
 use Trinity\Bundle\SearchBundle\NQL\Column;
 use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
@@ -72,9 +73,17 @@ class GridController extends FOSRestController
         foreach ($nqlQuery->getSelect()->getColumns() as $column) {
             $columns[] = $column->getFullName();
         }
+        $event = new ConfigurationEvent($entity);
+        $this->get('event_dispatcher')
+            ->dispatch('grid.get_configuration_event', $event);
+
+        $configuration = [];
+        if ($event->isPropagationStopped()) {
+            $configuration = $event->getGridConfigurationBuilder()->getConfiguration();
+        }
 
         list($entities, $totalCount, $scores) = $this->get('trinity.logger.elastic_read_log_service')
-            ->getByQuery($nqlQuery, $queryColumns?$query:'');
+            ->getByQuery($nqlQuery, $queryColumns?$query:'', $configuration);
 
         $result = $gridManager->convertEntitiesToArray($entities, $columns);
 
