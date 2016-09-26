@@ -209,11 +209,13 @@ class GridManager
         /** @var FilterInterface[] $filters */
         $filters = $this->getGlobalFilters();
 
-        foreach ($filters as $filter) {
-            $filteredObj = $filter->process(
-                $obj,
-                ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
-            );
+        if($filteredObj === $obj) {
+            foreach ($filters as $filter) {
+                $filteredObj = $filter->process(
+                    $obj,
+                    ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
+                );
+            }
         }
 
         if ($filteredObj !== $obj) {
