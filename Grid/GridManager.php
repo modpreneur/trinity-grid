@@ -5,8 +5,10 @@
 
 namespace Trinity\Bundle\GridBundle\Grid;
 
+use Doctrine\ORM\PersistentCollection;
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
 use Trinity\Bundle\GridBundle\Filter\FilterInterface;
+use Trinity\Bundle\SearchBundle\NQL\Column;
 use Trinity\Component\Utils\Exception\MemberAccessException;
 use Trinity\Component\Utils\Utils\ObjectMixin;
 
@@ -98,71 +100,152 @@ class GridManager
         $arrayResult = [];
 
         foreach ($entities as $entity) {
-            $row = [];
-            foreach ($columns as $column) {
-                $value = self::getValue($entity, $column);
-
-                // $grid is defined in condition count of entities > 0 so always in foreach entities
-                // specific filter
-                $filter = $grid->getColumnFormat($column);
-                if (!empty($filter)) {
-                    $filter = $this->getFilter($filter);
-                    $value = $filter->process(
-                        $value,
-                        ['column' => str_replace('.', '_', $column), 'entity' => $entity, 'grid' => $grid]
-                    );
-                }
-
-                /** @var FilterInterface[] $filters */
-                $filters = $this->getGlobalFilters();
-
-                foreach ($filters as $filter) {
-                    $value = $filter->process(
-                        $value,
-                        ['column' => str_replace('.', '_', $column), 'entity' => $entity, 'grid' => $grid]
-                    );
-                }
-
-                $row[preg_replace('/\./', ':', $column)] = $value;
-            }
-
-            $arrayResult[] = $row;
+            /** @noinspection PhpUndefinedVariableInspection */
+            $arrayResult[] = $this->select($columns, $entity, $grid);
         }
 
         return $arrayResult;
+    }
+
+//    private function select(array $columns, $entity, BaseGrid $grid) : array
+//    {
+//        $attributes = [];
+//
+//        foreach ($columns as $column) {
+//            $value = static::getValue($entity, $column);
+////            if (array_key_exists($key, $rows)) {
+////                if (is_array($value) && is_array($row[$key])) {
+////                    /** @noinspection SlowArrayOperationsInLoopInspection */
+////                    $row[$key] = array_replace_recursive($row[$key], $value);
+////                }
+////            } else {
+////                $row[$key] = $value;
+////            }
+//
+//
+//            $attributes[$column] = $value;
+//        }
+//
+//        return $attributes;
+//    }
+//
+//    public static function getValue($entity, $value)
+//    {
+//        return ['a' => 'v'];
+//    }
+
+
+    /**
+     * @param array $columns
+     * @param $entity
+     * @param BaseGrid $grid
+     * @return array
+     */
+    private function select(array $columns, $entity, BaseGrid $grid) : array
+    {
+        $row = [];
+        foreach ($columns as $column) {
+            $value = self::getValue($entity, $column, $grid);
+
+            $str = str_replace('.', ':', $column);
+            $col = Column::parse(str_replace('.', ':', $column));
+
+            $key = count($col->getJoinWith()) ? $col->getJoinWith()[0] : $col->getName();
+
+            if (array_key_exists($key, $row)) {
+                if (is_array($value) && is_array($row[$key])) {
+                    /** @noinspection SlowArrayOperationsInLoopInspection */
+                    $row[$key] = array_replace_recursive($row[$key], $value);
+                }
+            } else {
+                $row[$key] = $value;
+            }
+        }
+
+        return $row;
     }
 
 
     /**
      * @param object $entity
      * @param string $value
+     * @param BaseGrid $grid
      * @return mixed|string
      */
-    public static function getValue($entity, $value)
+    public function getValue($entity, $value, BaseGrid $grid)
     {
         $values = explode('.', $value);
-        return self::getObject($entity, $values, 0);
+        return $this->getObject($entity, $values, 0, $grid);
     }
 
     /**
      * @param object $entity
      * @param array $values
      * @param int $curValueIndex
+     * @param BaseGrid $grid
      * @return mixed|string
      */
-    private static function getObject($entity, $values, $curValueIndex)
+    private function getObject($entity, $values, $curValueIndex, BaseGrid $grid)
     {
         try {
             $obj = ObjectMixin::get($entity, $values[$curValueIndex]);
-            if ($curValueIndex === count($values) - 1) {
-                return $obj;
-            } elseif (is_object($obj)) {
-                return self::getObject($obj, $values, $curValueIndex + 1);
-            } else {
-                return $obj;
+        } catch (MemberAccessException $ex) {
+            $obj = '';
+        }
+
+        $currentColumnPart = implode('.', array_slice($values, 0, $curValueIndex + 1));
+        $filter = $grid->getColumnFormat($currentColumnPart);
+
+        $filteredObj = $obj;
+
+        if (!empty($filter)) {
+            $filter = $this->getFilter($filter);
+            $filteredObj = $filter->process(
+                $obj,
+                ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
+            );
+        }
+
+        /** @var FilterInterface[] $filters */
+        $filters = $this->getGlobalFilters();
+
+        foreach ($filters as $filter) {
+            $filteredObj = $filter->process(
+                $obj,
+                ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
+            );
+        }
+
+        if ($filteredObj !== $obj) {
+            return $curValueIndex ? [$values[$curValueIndex] => $filteredObj] : $filteredObj;
+        } else {
+            $obj = $filteredObj;
+        }
+
+        if ($curValueIndex === count($values) - 1) {
+            return $curValueIndex ? [$values[$curValueIndex] => $obj] : $obj;
+        } elseif ($obj instanceof PersistentCollection) {
+            $items = [];
+            foreach ($obj as $item) {
+                if ($curValueIndex === 0) {
+                    $items[] = $this->getObject($item, $values, $curValueIndex + 1, $grid);
+                } else {
+                    $items[$values[$curValueIndex]][] = $this->getObject($item, $values, $curValueIndex + 1, $grid);
+                }
             }
-        } catch (\Exception $ex) {
-            return '';
+            return $items;
+        } elseif (is_object($obj)) {
+            if ($curValueIndex === 0) {
+                return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
+            } else {
+                return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
+            }
+        } else {
+            if ($curValueIndex === 0) {
+                return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
+            } else {
+                return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
+            }
         }
     }
 
