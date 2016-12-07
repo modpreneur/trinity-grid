@@ -9,6 +9,7 @@
 namespace Trinity\Bundle\GridBundle\Service;
 
 use Trinity\Bundle\GridBundle\Grid\GridConfigurationBuilder;
+use Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException;
 use Trinity\Bundle\SettingsBundle\Manager\SettingsManager;
 
 /**
@@ -37,7 +38,6 @@ class GridConfigurationService
      * @param bool $editable
      * @param string $order
      * @return GridConfigurationBuilder
-     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      */
     public function createGridConfigurationBuilder(
         string $url,
@@ -47,7 +47,11 @@ class GridConfigurationService
         string $order = 'id:ASC'
     ) {
         if (!$limit) {
-            $limit = $this->settingManager->get('items_on_page');
+            try {
+                $limit = $this->settingManager->get('items_on_page');
+            } catch (PropertyNotExistsException $e) {
+                $limit = 1;
+            }
         }
         return new GridConfigurationBuilder($url, $maxEntities, $limit, $editable, $order);
     }

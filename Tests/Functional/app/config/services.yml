@@ -1,11 +1,19 @@
 services:
   trinity.grid.test.product:
     class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\ProductGrid
+    arguments:
+        - "@trinity.grid.grid_configuration_service"
+        - "@trinity.settings"
+        - "@router"
     tags:
         - { name: trinity.grid, alias: product }
 
 
   trinity.grid.test.user:
       class: Trinity\Bundle\GridBundle\Tests\Functional\Grid\UserGrid
+      arguments:
+        - "@trinity.grid.grid_configuration_service"
+        - "@trinity.settings"
+        - "@router"
       tags:
           - { name: trinity.grid, alias: user }

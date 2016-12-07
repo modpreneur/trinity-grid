@@ -9,6 +9,7 @@ use Doctrine\ORM\PersistentCollection;
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
 use Trinity\Bundle\GridBundle\Filter\FilterInterface;
 use Trinity\Bundle\SearchBundle\NQL\Column;
+use Trinity\Bundle\SearchBundle\Utils\StringUtils;
 use Trinity\Component\Utils\Exception\MemberAccessException;
 use Trinity\Component\Utils\Utils\ObjectMixin;
 
@@ -68,6 +69,12 @@ class GridManager
     {
         $name = strtolower($name);
 
+        $lastSlashIndex = strrpos($name, '\\');
+
+        if ($lastSlashIndex && StringUtils::endsWith($name, 'grid')) {
+            $name = substr($name, $lastSlashIndex + 1, -strlen('grid'));
+        }
+
         if (array_key_exists($name, $this->grids)) {
             return $this->grids[$name];
         }
@@ -75,13 +82,14 @@ class GridManager
         return null;
     }
 
-
     /**
      * @param array|\Iterator $entities
      * @param array $columns
      * @param string $gridName
      *
      * @return array
+     * @throws \BadFunctionCallException
+     * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws InvalidArgumentException
      * @throws MemberAccessException
      */
@@ -139,15 +147,17 @@ class GridManager
      * @param array $columns
      * @param $entity
      * @param BaseGrid $grid
+     *
      * @return array
+     * @throws \BadFunctionCallException
+     * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      */
     private function select(array $columns, $entity, BaseGrid $grid) : array
     {
         $row = [];
         foreach ($columns as $column) {
-            $value = self::getValue($entity, $column, $grid);
+            $value = $this->getValue($entity, $column, $grid);
 
-            $str = str_replace('.', ':', $column);
             $col = Column::parse(str_replace('.', ':', $column));
 
             $key = count($col->getJoinWith()) ? $col->getJoinWith()[0] : $col->getName();
@@ -165,12 +175,13 @@ class GridManager
         return $row;
     }
 
-
     /**
      * @param object $entity
      * @param string $value
      * @param BaseGrid $grid
+     *
      * @return mixed|string
+     * @throws \BadFunctionCallException
      */
     public function getValue($entity, $value, BaseGrid $grid)
     {
@@ -183,7 +194,9 @@ class GridManager
      * @param array $values
      * @param int $curValueIndex
      * @param BaseGrid $grid
+     *
      * @return mixed|string
+     * @throws \BadFunctionCallException
      */
     private function getObject($entity, $values, $curValueIndex, BaseGrid $grid)
     {
@@ -209,7 +222,7 @@ class GridManager
         /** @var FilterInterface[] $filters */
         $filters = $this->getGlobalFilters();
 
-        if($filteredObj === $obj) {
+        if ($filteredObj === $obj) {
             foreach ($filters as $filter) {
                 $filteredObj = $filter->process(
                     $obj,
