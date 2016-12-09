@@ -65,6 +65,7 @@ abstract class BaseGrid
         $this->configurationService = $configService;
         $this->settings = $settings;
         $this->router = $router;
+        $this->entityName = $this->getGridName();
 
         $this->templates = [];
         $this->format = [];
@@ -175,7 +176,7 @@ abstract class BaseGrid
 
         try {
             $url = $this->router->generate('grid_default', [
-                'entity' => substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Grid'))
+                'entity' => $this->getGridName(),
             ]);
         } catch (InvalidParameterException | RouteNotFoundException | MissingMandatoryParametersException $e) {
             $url = '';
@@ -194,6 +195,16 @@ abstract class BaseGrid
         return $gridConfBuilder->getJSON();
     }
 
+
+    /**
+     * @return string
+     */
+    private function getGridName()
+    {
+        return substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Grid'));
+    }
+
+
     /**
      * @return int
      */
@@ -201,6 +212,7 @@ abstract class BaseGrid
     {
         return $this->limit;
     }
+
 
     /**
      * @param int $limit
@@ -210,6 +222,7 @@ abstract class BaseGrid
         $this->limit = $limit;
     }
 
+
     /**
      * @return int
      */
@@ -217,6 +230,7 @@ abstract class BaseGrid
     {
         return $this->count;
     }
+
 
     /**
      * @param int $count
@@ -226,6 +240,7 @@ abstract class BaseGrid
         $this->count = $count;
     }
 
+
     /**
      * @return boolean
      */
@@ -233,6 +248,7 @@ abstract class BaseGrid
     {
         return $this->editable;
     }
+
 
     /**
      * @param boolean $editable
@@ -242,6 +258,7 @@ abstract class BaseGrid
         $this->editable = $editable;
     }
 
+
     /**
      * @return string
      */
@@ -249,6 +266,7 @@ abstract class BaseGrid
     {
         return $this->orderBy;
     }
+
 
     /**
      * @param string $orderBy
@@ -258,6 +276,7 @@ abstract class BaseGrid
         $this->orderBy = $orderBy;
     }
 
+
     /**
      * @return string
      */
@@ -265,6 +284,7 @@ abstract class BaseGrid
     {
         return $this->url;
     }
+
 
     /**
      * @param string $url
@@ -274,13 +294,15 @@ abstract class BaseGrid
         $this->url = $url;
     }
 
+
     /**
      * @return string
      */
-    public function getEntityName(): string
+    public function getEntityName() : string
     {
         return $this->entityName;
     }
+
 
     /**
      * @param string $entityName
