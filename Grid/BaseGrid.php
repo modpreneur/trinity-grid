@@ -50,6 +50,9 @@ abstract class BaseGrid
     /** @var Router */
     protected $router;
 
+    /** @var string */
+    protected $entityName;
+
     /**
      * BaseGrid constructor.
      *
@@ -170,10 +173,10 @@ abstract class BaseGrid
             $limit = 1;
         }
 
-        $entityName = substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Grid'));
-
         try {
-            $url = $this->router->generate('grid_default', ['entity' => $entityName]);
+            $url = $this->router->generate('grid_default', [
+                'entity' => substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Grid'))
+            ]);
         } catch (InvalidParameterException | RouteNotFoundException | MissingMandatoryParametersException $e) {
             $url = '';
         }
@@ -269,5 +272,21 @@ abstract class BaseGrid
     public function setUrl(string $url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName(): string
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * @param string $entityName
+     */
+    public function setEntityName(string $entityName)
+    {
+        $this->entityName = $entityName;
     }
 }

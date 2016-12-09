@@ -65,7 +65,7 @@ class GridManager
      * @param String $name
      * @return BaseGrid|null
      */
-    public function getGrid($name) : BaseGrid
+    public function getGrid($name)
     {
         $name = strtolower($name);
 

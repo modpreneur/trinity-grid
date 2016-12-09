@@ -8,10 +8,8 @@ namespace Trinity\Bundle\GridBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Trinity\Bundle\GridBundle\Event\ConfigurationEvent;
 use Trinity\Bundle\GridBundle\Grid\GridManager;
 use Trinity\Bundle\SearchBundle\NQL\Column;
@@ -27,7 +25,7 @@ use Trinity\Bundle\SearchBundle\Search;
 class GridController extends FOSRestController
 {
     /**
-     * @Route("/elastic/{entity}", name="grid-elastic")
+     * @Route("/elastic/{gridName}", name="grid-elastic")
      *
      * @QueryParam(name="c", nullable=true, strict=false, description="Columns", allowBlank=true)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=false)
@@ -35,10 +33,13 @@ class GridController extends FOSRestController
      * @QueryParam(name="limit", nullable=true, strict=false, description="Limit", allowBlank=true)
      * @QueryParam(name="orderBy", nullable=true, strict=false, description="Order by", allowBlank=true)
      *
-     * @param string $entity
+     * @param string $gridName
      * @param ParamFetcher $paramFetcher
      *
      * @return JsonResponse
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws \BadFunctionCallException
      * @throws \Doctrine\ORM\ORMException
      *
      * @throws \Trinity\Component\Utils\Exception\MemberAccessException
@@ -46,16 +47,24 @@ class GridController extends FOSRestController
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridElasticAction(ParamFetcher $paramFetcher, $entity)
+    public function gridElasticAction(ParamFetcher $paramFetcher, $gridName)
     {
         $query = $paramFetcher->get('q');
         $queryColumns = $paramFetcher->get('c');
         $offset = $paramFetcher->get('offset');
         $limit = $paramFetcher->get('limit');
         $orderBy = $paramFetcher->get('orderBy');
-        
+
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
+
+        $grid = $gridManager->getGrid($gridName);
+
+        if ($grid === null) {
+            throw new \InvalidArgumentException("Grid '$gridName' does not exists");
+        }
+
+        $entity = $grid->getEntityName();
 
         /** @var Search $search */
         $search = $this->get('trinity.search');
@@ -85,17 +94,15 @@ class GridController extends FOSRestController
         list($entities, $totalCount, $scores) = $this->get('trinity.logger.elastic_read_log_service')
             ->getByQuery($nqlQuery, $queryColumns?$query:'', $configuration);
 
-        $result = $gridManager->convertEntitiesToArray($entities, $columns);
+        $result = $gridManager->convertEntitiesToArray($entities, $columns, $gridName);
 
         return new JsonResponse(
             ['count' => ['result' => count($result), 'total' => $totalCount], 'result' => $result, $scores]
         );
-
     }
 
-
     /**
-     * @Route("/{entity}", name="grid-index")
+     * @Route("/{gridName}", name="grid-index")
      *
      * @QueryParam(name="c", nullable=true, strict=false, description="Columns", allowBlank=true)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=false)
@@ -104,8 +111,11 @@ class GridController extends FOSRestController
      * @QueryParam(name="orderBy", nullable=true, strict=false, description="Order by", allowBlank=true)
      *
      * @param ParamFetcher $paramFetcher
-     * @param string $entity
+     * @param string $gridName
+     *
      * @return JsonResponse
+     * @throws \InvalidArgumentException
+     * @throws \BadFunctionCallException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\ORMException
@@ -114,7 +124,7 @@ class GridController extends FOSRestController
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridAction(ParamFetcher $paramFetcher, $entity)
+    public function gridAction(ParamFetcher $paramFetcher, $gridName)
     {
         $query = $paramFetcher->get('q');
         $queryColumns = $paramFetcher->get('c');
@@ -128,6 +138,13 @@ class GridController extends FOSRestController
         /** @var Search $search */
         $search = $this->get('trinity.search');
 
+        $grid = $gridManager->getGrid($gridName);
+
+        if ($grid === null) {
+            throw new \InvalidArgumentException("Grid '$gridName' does not exists");
+        }
+
+        $entity = $grid->getEntityName();
 
         if ($queryColumns === null) {
             /** @var NQLQuery $nqlQuery */
@@ -137,7 +154,7 @@ class GridController extends FOSRestController
             $nqlQuery = $search->queryEntity($entity, $queryColumns, null, $query, $limit, $offset, $orderBy);
         }
 
-        $gridManager->getGrid($entity)->prepareQuery($nqlQuery);
+        $grid->prepareQuery($nqlQuery);
 
         $columns = [];
 
@@ -151,7 +168,7 @@ class GridController extends FOSRestController
         $result = $gridManager->convertEntitiesToArray(
             $queryBuilder->getQuery()->getResult(),
             $columns,
-            $entity
+            $gridName
         );
 
         $totalCount = $this->get('trinity.search.dql_converter')
