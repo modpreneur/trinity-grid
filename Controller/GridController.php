@@ -25,7 +25,7 @@ use Trinity\Bundle\SearchBundle\Search;
 class GridController extends FOSRestController
 {
     /**
-     * @Route("/elastic/{gridName}", name="grid-elastic")
+     * @Route("/elastic/{entity}", name="grid-elastic")
      *
      * @QueryParam(name="c", nullable=true, strict=false, description="Columns", allowBlank=true)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=false)
@@ -33,7 +33,7 @@ class GridController extends FOSRestController
      * @QueryParam(name="limit", nullable=true, strict=false, description="Limit", allowBlank=true)
      * @QueryParam(name="orderBy", nullable=true, strict=false, description="Order by", allowBlank=true)
      *
-     * @param string $gridName
+     * @param string $entity
      * @param ParamFetcher $paramFetcher
      *
      * @return JsonResponse
@@ -47,13 +47,15 @@ class GridController extends FOSRestController
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridElasticAction(ParamFetcher $paramFetcher, $gridName)
+    public function gridElasticAction(ParamFetcher $paramFetcher, $entity)
     {
         $query = $paramFetcher->get('q');
         $queryColumns = $paramFetcher->get('c');
         $offset = $paramFetcher->get('offset');
         $limit = $paramFetcher->get('limit');
         $orderBy = $paramFetcher->get('orderBy');
+
+        $gridName = $entity;
 
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
@@ -102,7 +104,7 @@ class GridController extends FOSRestController
     }
 
     /**
-     * @Route("/{gridName}", name="grid-index")
+     * @Route("/{entity}", name="grid-index")
      *
      * @QueryParam(name="c", nullable=true, strict=false, description="Columns", allowBlank=true)
      * @QueryParam(name="q", nullable=false, strict=true, description="DB Query", allowBlank=false)
@@ -111,7 +113,7 @@ class GridController extends FOSRestController
      * @QueryParam(name="orderBy", nullable=true, strict=false, description="Order by", allowBlank=true)
      *
      * @param ParamFetcher $paramFetcher
-     * @param string $gridName
+     * @param string $entity
      *
      * @return JsonResponse
      * @throws \InvalidArgumentException
@@ -124,13 +126,15 @@ class GridController extends FOSRestController
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws \Trinity\Bundle\GridBundle\Exception\InvalidArgumentException
      */
-    public function gridAction(ParamFetcher $paramFetcher, $gridName)
+    public function gridAction(ParamFetcher $paramFetcher, $entity)
     {
         $query = $paramFetcher->get('q');
         $queryColumns = $paramFetcher->get('c');
         $offset = $paramFetcher->get('offset');
         $limit = $paramFetcher->get('limit');
         $orderBy = $paramFetcher->get('orderBy');
+
+        $gridName = $entity;
 
         /** @var GridManager $gridManager */
         $gridManager = $this->get('trinity.grid.manager');
