@@ -23,7 +23,7 @@
     "symfony/form": "~3",
     "symfony/browser-kit": "~3",
     "doctrine/cache": "~1",
-    "trinity/settings": "dev-master",
+    "trinity/settings": "~1.1",
     "trinity/logger" : "dev-master",
     "trinity/search": "dev-master",
     "trinity/utils": "dev-master"
