@@ -62,7 +62,7 @@ class TwigFilter extends BaseFilter
         }
 
         foreach ($templates as $template) {
-            if ($template->hasBlock('cell_'.$column)) {
+            if ($template->hasBlock('cell_'.$column, [])) {
                 $input = trim(
                     $template->renderBlock('cell_'.$column, ['row' => $entity, 'entity' => $entity, 'value' => $input])
                 );
