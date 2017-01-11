@@ -81,7 +81,7 @@ abstract class BaseGrid
      */
     protected function defaultSetUp()
     {
-        $this->setColumnFilter('id', 'id');
+//        $this->setColumnFilter('id', 'id');
         $this->setColumnFilter('createdAt', 'dateTime');
         $this->setColumnFilter('updatedAt', 'dateTime');
     }
