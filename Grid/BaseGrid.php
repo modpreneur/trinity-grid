@@ -54,6 +54,12 @@ abstract class BaseGrid
     protected $entityName;
 
     /**
+     * @var array
+     * This array can be used to pass variables to a grid class (from controllers etc.)
+     */
+    protected $options;
+
+    /**
      * BaseGrid constructor.
      *
      * @param GridConfigurationService $configService
@@ -310,5 +316,13 @@ abstract class BaseGrid
     public function setEntityName(string $entityName)
     {
         $this->entityName = $entityName;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
     }
 }
