@@ -1,7 +1,9 @@
-#!/bin/bash sh
+#!/bin/sh sh
 
 composer update
 
 phpunit
 
-#while true; do sleep 1000; done
+phpstan analyse Controller/ DependencyInjection/ Event/ EventListener/ Exception/ Filter/ Grid/ Service/ Tests/ --level=4
+
+#tail -f /dev/null
