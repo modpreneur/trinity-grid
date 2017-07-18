@@ -6,11 +6,15 @@
 namespace Trinity\Bundle\GridBundle\Tests\Functional;
 
 
+/**
+ * {@inheritDoc}
+ */
 class ControllerTest extends WebTestCase
 {
 
-    public function testIndex(){
-        $client = $this->createClient();
+    public function testIndex()
+    {
+        $client = static::createClient();
         $r = $client->request('GET', '/grid/product?q=test');
 
         //dump(substr($r->html(), 0, 1000));
