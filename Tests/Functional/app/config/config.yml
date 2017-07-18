@@ -69,8 +69,9 @@ trinity_settings:
 trinity_logger:
   logger_user_provider: "@trinity.grid.test.logger_connection"
   logger_ttl_provider: "@trinity.grid.test.logger_connection"
-  elastic_logs:
-    elastic_host: 'necktie_elasticsearch_1'
+  elastic_host: 'necktie_elasticsearch_1'
+  log_classes: []
+
 
 
 security:
