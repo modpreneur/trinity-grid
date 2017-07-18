@@ -17,3 +17,6 @@ services:
         - "@router"
       tags:
           - { name: trinity.grid, alias: user }
+
+  trinity.grid.test.logger_connection:
+      class: Trinity\Bundle\GridBundle\Tests\Functional\LoggerConnection

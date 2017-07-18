@@ -27,6 +27,7 @@ while ($dir !== $lastDir) {
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 use FOS\RestBundle\FOSRestBundle;
+use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -55,9 +56,9 @@ class AppKernel extends Kernel
             new \Trinity\Bundle\LoggerBundle\LoggerBundle(),
             new \Trinity\Bundle\SearchBundle\SearchBundle(),
             new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
+            new MonologBundle(),
 
             new \Trinity\Bundle\GridBundle\GridBundle(),
-
         );
     }
 
