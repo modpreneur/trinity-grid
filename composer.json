@@ -25,7 +25,7 @@
     "symfony/yaml": "~3.0",
     "doctrine/cache": "~1",
     "trinity/settings": "~1.2",
-    "trinity/logger" : "dev-master",
+    "trinity/logger" : "~1.0",
     "trinity/search": "dev-master",
     "trinity/utils": "dev-master",
     "trinity/core-interfaces": "~1.0"
