@@ -6,6 +6,7 @@
 namespace Trinity\Bundle\GridBundle\Grid;
 
 use Doctrine\ORM\PersistentCollection;
+use Trinity\Bundle\GridBundle\Exception\GridNotFoundException;
 use Trinity\Bundle\GridBundle\Exception\InvalidArgumentException;
 use Trinity\Bundle\GridBundle\Filter\FilterInterface;
 use Trinity\Bundle\SearchBundle\NQL\Column;
@@ -62,24 +63,26 @@ class GridManager
 
 
     /**
-     * @param String $name
-     * @return BaseGrid|null
+     * Get registered grid
+     * @param String|boolean $name
+     * @return BaseGrid
+     * @throws \Trinity\Bundle\GridBundle\Exception\GridNotFoundException
      */
-    public function getGrid($name)
+    public function getGrid(string $name): BaseGrid
     {
-        $name = strtolower($name);
+        $name = \strtolower($name);
 
         $lastSlashIndex = strrpos($name, '\\');
 
         if ($lastSlashIndex && StringUtils::endsWith($name, 'grid')) {
-            $name = substr($name, $lastSlashIndex + 1, -strlen('grid'));
+            $name = \substr($name, $lastSlashIndex + 1, -\strlen('grid'));
         }
 
-        if (array_key_exists($name, $this->grids)) {
+        if (\array_key_exists($name, $this->grids)) {
             return $this->grids[$name];
         }
 
-        return null;
+        throw new GridNotFoundException("Grid $name does not exist or has not been registered yet.");
     }
 
     /**
@@ -88,18 +91,20 @@ class GridManager
      * @param string $gridName
      *
      * @return array
+     * @throws \ReflectionException
+     * @throws \Trinity\Bundle\GridBundle\Exception\GridNotFoundException
      * @throws \BadFunctionCallException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      * @throws InvalidArgumentException
      * @throws MemberAccessException
      */
-    public function convertEntitiesToArray($entities, $columns, $gridName = null) : array
+    public function convertEntitiesToArray($entities, $columns, ?string $gridName = null): array
     {
         if (!$this->isIterable($entities)) {
             throw new InvalidArgumentException('Argument \'entities\' is not iterable.');
         }
 
-        if (count($entities) > 0) {
+        if (\count($entities) > 0) {
             $grid = $this->getGrid(
                 $gridName ?? $this->getGridNameFromEntities($entities)
             );
@@ -115,40 +120,13 @@ class GridManager
         return $arrayResult;
     }
 
-//    private function select(array $columns, $entity, BaseGrid $grid) : array
-//    {
-//        $attributes = [];
-//
-//        foreach ($columns as $column) {
-//            $value = static::getValue($entity, $column);
-////            if (array_key_exists($key, $rows)) {
-////                if (is_array($value) && is_array($row[$key])) {
-////                    /** @noinspection SlowArrayOperationsInLoopInspection */
-////                    $row[$key] = array_replace_recursive($row[$key], $value);
-////                }
-////            } else {
-////                $row[$key] = $value;
-////            }
-//
-//
-//            $attributes[$column] = $value;
-//        }
-//
-//        return $attributes;
-//    }
-//
-//    public static function getValue($entity, $value)
-//    {
-//        return ['a' => 'v'];
-//    }
-
-
     /**
      * @param array $columns
      * @param $entity
      * @param BaseGrid $grid
      *
      * @return array
+     * @throws \ReflectionException
      * @throws \BadFunctionCallException
      * @throws \Trinity\Bundle\SearchBundle\Exception\SyntaxErrorException
      */
@@ -158,14 +136,14 @@ class GridManager
         foreach ($columns as $column) {
             $value = $this->getValue($entity, $column, $grid);
 
-            $col = Column::parse(str_replace('.', ':', $column));
+            $col = Column::parse(\str_replace('.', ':', $column));
 
-            $key = count($col->getJoinWith()) ? $col->getJoinWith()[0] : $col->getName();
+            $key = \count($col->getJoinWith()) ? $col->getJoinWith()[0] : $col->getName();
 
-            if (array_key_exists($key, $row)) {
-                if (is_array($value) && is_array($row[$key])) {
+            if (\array_key_exists($key, $row)) {
+                if (\is_array($value) && \is_array($row[$key])) {
                     /** @noinspection SlowArrayOperationsInLoopInspection */
-                    $row[$key] = array_replace_recursive($row[$key], $value);
+                    $row[$key] = \array_replace_recursive($row[$key], $value);
                 }
             } else {
                 $row[$key] = $value;
@@ -181,11 +159,12 @@ class GridManager
      * @param BaseGrid $grid
      *
      * @return mixed|string
+     * @throws \ReflectionException
      * @throws \BadFunctionCallException
      */
     public function getValue($entity, $value, BaseGrid $grid)
     {
-        $values = explode('.', $value);
+        $values = \explode('.', $value);
         return $this->getObject($entity, $values, 0, $grid);
     }
 
@@ -196,6 +175,7 @@ class GridManager
      * @param BaseGrid $grid
      *
      * @return mixed|string
+     * @throws \ReflectionException
      * @throws \BadFunctionCallException
      */
     private function getObject($entity, $values, $curValueIndex, BaseGrid $grid)
@@ -206,7 +186,7 @@ class GridManager
             $obj = '';
         }
 
-        $currentColumnPart = implode('.', array_slice($values, 0, $curValueIndex + 1));
+        $currentColumnPart = \implode('.', \array_slice($values, 0, $curValueIndex + 1));
         $filter = $grid->getColumnFormat($currentColumnPart);
 
         $filteredObj = $obj;
@@ -215,7 +195,7 @@ class GridManager
             $filter = $this->getFilter($filter);
             $filteredObj = $filter->process(
                 $obj,
-                ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
+                ['column' => \str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
             );
         }
 
@@ -226,20 +206,22 @@ class GridManager
             foreach ($filters as $filter) {
                 $filteredObj = $filter->process(
                     $obj,
-                    ['column' => str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
+                    ['column' => \str_replace('.', '_', $currentColumnPart), 'entity' => $entity, 'grid' => $grid]
                 );
             }
         }
 
         if ($filteredObj !== $obj) {
             return $curValueIndex ? [$values[$curValueIndex] => $filteredObj] : $filteredObj;
-        } else {
-            $obj = $filteredObj;
         }
+        // else
+        $obj = $filteredObj;
 
         if ($curValueIndex === count($values) - 1) {
             return $curValueIndex ? [$values[$curValueIndex] => $obj] : $obj;
-        } elseif ($obj instanceof PersistentCollection) {
+        }
+
+        if ($obj instanceof PersistentCollection) {
             $items = [];
             foreach ($obj as $item) {
                 if ($curValueIndex === 0) {
@@ -249,38 +231,42 @@ class GridManager
                 }
             }
             return $items;
-        } elseif (is_object($obj)) {
-            if ($curValueIndex === 0) {
-                return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
-            } else {
-                return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
-            }
-        } else {
-            if ($curValueIndex === 0) {
-                return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
-            } else {
-                return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
-            }
         }
+
+        if (\is_object($obj)) {
+            if ($curValueIndex === 0) {
+                return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
+            }
+            // else
+            return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
+        }
+
+        // else
+        if ($curValueIndex === 0) {
+            return $this->getObject($obj, $values, $curValueIndex + 1, $grid);
+        }
+        // else
+        return [$values[$curValueIndex] => $this->getObject($obj, $values, $curValueIndex + 1, $grid)];
     }
 
 
     /**
      * @param array $entities
      * @return string
+     * @throws \ReflectionException
      * @throws InvalidArgumentException
      */
     public function getGridNameFromEntities($entities): string
     {
         /* Get name */
-        $first = reset($entities);
+        $first = \reset($entities);
 
-        if (!is_object($first)) {
+        if (!\is_object($first)) {
             throw new InvalidArgumentException('Entities must be array of entities (array of objects).');
         }
 
         $rc = new \ReflectionClass($first);
-        return strtolower($rc->getShortName());
+        return \strtolower($rc->getShortName());
     }
 
 
@@ -290,7 +276,7 @@ class GridManager
      */
     protected function isIterable($var) : bool
     {
-        return (is_array($var) || $var instanceof \Traversable);
+        return (\is_array($var) || $var instanceof \Traversable);
     }
 
 
@@ -318,7 +304,7 @@ class GridManager
      */
     public function getFilter($column) : FilterInterface
     {
-        if (array_key_exists($column, $this->filter)) {
+        if (\array_key_exists($column, $this->filter)) {
             return $this->filter[$column];
         }
 
@@ -329,9 +315,9 @@ class GridManager
     /**
      * @return array
      */
-    public function getGlobalFilters()
+    public function getGlobalFilters(): array
     {
-        return array_filter(
+        return \array_filter(
             $this->filter,
             function (FilterInterface $v) {
                 return $v->isGlobal();
