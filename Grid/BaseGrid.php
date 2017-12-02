@@ -76,6 +76,7 @@ abstract class BaseGrid
         $this->templates = [];
         $this->format = [];
         $this->columnFormat = [];
+        $this->url = '';
 
         $this->defaultSetUp();
         $this->setUp();
@@ -85,7 +86,7 @@ abstract class BaseGrid
     /**
      * Set default values for basic column. (id, createAt, updateAt)
      */
-    protected function defaultSetUp()
+    protected function defaultSetUp(): void
     {
 //        $this->setColumnFilter('id', 'id');
         $this->setColumnFilter('createdAt', 'dateTime');
@@ -98,7 +99,7 @@ abstract class BaseGrid
      *
      * @return void
      */
-    abstract protected function setUp();
+    abstract protected function setUp(): void;
 
 
     /**
@@ -128,12 +129,12 @@ abstract class BaseGrid
 
     /**
      * @param $column
-     * @return string|null
+     * @return string
      */
     public function getColumnFormat($column) : string
     {
         if (array_key_exists($column, $this->columnFormat)) {
-            return $this->columnFormat[$column];
+            return $this->columnFormat[$column] ?? '';
         }
 
         return '';
@@ -144,7 +145,7 @@ abstract class BaseGrid
      * @param string $column
      * @param string $format
      */
-    public function setColumnFilter($column, $format)
+    public function setColumnFilter($column, $format): void
     {
         $this->columnFormat[$column] = $format;
     }
@@ -153,7 +154,7 @@ abstract class BaseGrid
     /**
      * @param NQLQuery $query
      */
-    public function prepareQuery(NQLQuery $query)
+    public function prepareQuery(NQLQuery $query): void
     {
     }
 
@@ -165,14 +166,15 @@ abstract class BaseGrid
      *
      * @return void
      */
-    abstract protected function build(GridConfigurationBuilder $builder);
+    abstract protected function build(GridConfigurationBuilder $builder): void;
 
     /**
      * Get JSON for grid configuration
      *
      * @return string
+     * @throws \UnexpectedValueException
      */
-    public function getJSON()
+    public function getJSON(): string
     {
         try {
             $limit = $this->limit ?? $this->settings->get('items_on_page') ?? 0;
@@ -180,13 +182,17 @@ abstract class BaseGrid
             $limit = 1;
         }
 
-        try {
-            $url = $this->router->generate('grid_default', [
-                'entity' => $this->getGridName(),
-            ]);
-        } catch (InvalidParameterException | RouteNotFoundException | MissingMandatoryParametersException $e) {
-            $url = '';
+        $url = $this->url;
+        if ($url === '') {
+            try {
+                $url = $this->router->generate('grid_default', [
+                    'entity' => $this->getGridName(),
+                ]);
+            } catch (InvalidParameterException | RouteNotFoundException | MissingMandatoryParametersException $e) {
+                $url = '';
+            }
         }
+
 
         $gridConfBuilder = $this->configurationService->createGridConfigurationBuilder(
             $url,
@@ -205,7 +211,7 @@ abstract class BaseGrid
     /**
      * @return string
      */
-    private function getGridName()
+    private function getGridName(): string
     {
         return substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Grid'));
     }
@@ -223,7 +229,7 @@ abstract class BaseGrid
     /**
      * @param int $limit
      */
-    public function setLimit(int $limit)
+    public function setLimit(int $limit): void
     {
         $this->limit = $limit;
     }
@@ -241,7 +247,7 @@ abstract class BaseGrid
     /**
      * @param int $count
      */
-    public function setCount(int $count)
+    public function setCount(int $count): void
     {
         $this->count = $count;
     }
@@ -259,7 +265,7 @@ abstract class BaseGrid
     /**
      * @param boolean $editable
      */
-    public function setEditable(bool $editable)
+    public function setEditable(bool $editable): void
     {
         $this->editable = $editable;
     }
@@ -277,7 +283,7 @@ abstract class BaseGrid
     /**
      * @param string $orderBy
      */
-    public function setOrderBy(string $orderBy)
+    public function setOrderBy(string $orderBy): void
     {
         $this->orderBy = $orderBy;
     }
@@ -295,7 +301,7 @@ abstract class BaseGrid
     /**
      * @param string $url
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
@@ -313,7 +319,7 @@ abstract class BaseGrid
     /**
      * @param string $entityName
      */
-    public function setEntityName(string $entityName)
+    public function setEntityName(string $entityName): void
     {
         $this->entityName = $entityName;
     }
@@ -321,7 +327,7 @@ abstract class BaseGrid
     /**
      * @param array $options
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
